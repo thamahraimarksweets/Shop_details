@@ -1,90 +1,346 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍰 Sweet Bakery Order Form</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Thamahrai Mark Sweets — Authentic Tamil Mittai</title>
+  <meta name="description" content="Thamahrai Mark Sweets — traditional peanut chikki, sesame & coconut mittai made with jaggery. Order via WhatsApp.">
+  <meta name="keywords" content="Tamil sweets, chikki, peanut chikki, sesame mittai, jaggery sweets, Thamahrai">
+  <link rel="canonical" href="https://USERNAME.github.io/">
+
+  <!-- Google font (replace with local if desired) -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Mukta:wght@300;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#fff8f0;
+      --accent:#c85a1a; /* jaggery brown */
+      --accent-2:#f7a20b; /* saffron */
+      --muted:#6b6b6b;
+      --card:#fff;
+      --glass: rgba(255,255,255,0.6);
+      --radius:16px;
+      font-family: 'Mukta', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#fff);color:#2b2b2b;line-height:1.4}
+
+    /* Header */
+    header{padding:20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px;box-shadow:0 6px 20px rgba(200,90,30,0.12)}
+    .brand h1{font-size:18px;margin:0}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+    nav{display:flex;gap:12px}
+    nav a{font-weight:600;color:#333;text-decoration:none;padding:8px 12px;border-radius:10px}
+    nav a.cta{background:var(--accent);color:#fff}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;padding:24px;align-items:center}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.85));padding:28px;border-radius:20px;box-shadow:0 10px 30px rgba(50,30,20,0.06)}
+    .kicker{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
+    .hero h2{margin:12px 0 8px;font-size:28px;font-weight:700}
+    .hero p.lead{color:var(--muted);margin:0 0 16px}
+    .hero .badges{display:flex;gap:8px;flex-wrap:wrap}
+    .badge{background:#fff;padding:8px 12px;border-radius:10px;border:1px solid rgba(200,90,30,0.08);font-weight:600}
+
+    .hero-media{display:flex;flex-direction:column;gap:12px}
+    .hero-media .cover{height:220px;border-radius:16px;background:linear-gradient(135deg,#ffe6cc,#fff);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+    .cover img{width:100%;height:100%;object-fit:cover;display:block}
+    .small-cards{display:flex;gap:10px}
+    .small{flex:1;background:var(--card);padding:10px;border-radius:12px;text-align:center}
+
+    /* Products */
+    .section{padding:24px}
+    .section h3{margin:0 0 12px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--card);border-radius:14px;padding:12px;box-shadow:0 6px 18px rgba(30,20,10,0.04);overflow:hidden}
+    .product-media{height:160px;border-radius:10px;background:#f7f0ea;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .product-media img{width:100%;height:100%;object-fit:cover}
+    .meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+    .price{font-weight:700;color:var(--accent)}
+    .p-desc{font-size:13px;color:var(--muted);margin:8px 0}
+    .btn{display:inline-block;padding:8px 12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-weight:700;text-decoration:none;cursor:pointer}
+
+    /* testimonials */
+    .testimonials{display:flex;gap:12px;align-items:center}
+    .t-card{background:linear-gradient(90deg, #fff, rgba(255,255,255,0.9));padding:12px;border-radius:12px;flex:1;box-shadow:0 6px 20px rgba(0,0,0,0.04)}
+
+    /* Footer */
+    footer{padding:24px;background:linear-gradient(180deg, rgba(255,245,235,0.6), transparent);border-top:1px solid rgba(200,140,100,0.06)}
+    .footer-grid{display:flex;gap:20px;flex-wrap:wrap}
+
+    /* WhatsApp floating */
+    .whatsapp{position:fixed;right:18px;bottom:18px;background:linear-gradient(135deg,#25D366,#128C7E);width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(18,140,126,0.18);z-index:999}
+    .whatsapp svg{width:28px;height:28px;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12))}
+
+    /* responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr 1fr}
+      .grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:720px){
+      header{padding:12px}
+      .hero{grid-template-columns:1fr;gap:14px;padding:12px}
+      .grid{grid-template-columns:1fr}
+      nav{display:none}
+    }
+
+    /* simple animation */
+    .fade-up{opacity:0;transform:translateY(10px);transition:all 420ms cubic-bezier(.2,.9,.3,1)}
+    .inview{opacity:1;transform:none}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎂 Order Your Dream Cake!</h1>
-        <form id="cakeForm">
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" placeholder="Enter your full name">
-            </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Enter your email">
-            </div>
+<header>
+  <div class="brand">
+    <div class="logo" aria-hidden>TM</div>
+    <div>
+      <h1>Thamahrai Mark Sweets</h1>
+      <p>Traditional Tamil sweets • Made with jaggery</p>
+    </div>
+  </div>
+  <nav>
+    <a href="#products">Products</a>
+    <a href="#about">About</a>
+    <a href="#contact" class="cta">Order via WhatsApp</a>
+  </nav>
+</header>
 
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="text" id="phone" placeholder="Enter your phone number">
-            </div>
+<main>
+  <section class="hero section">
+    <div class="hero-card fade-up" id="heroCard">
+      <span class="kicker">Handmade • Fresh Batches</span>
+      <h2>Village taste in every bite — Crispy Peanut Chikki & More</h2>
+      <p class="lead">Small-batch sweets from traditional recipes. No preservatives — just jaggery, love and crunch.</p>
+      <div class="badges">
+        <span class="badge">Free sample on orders ₹500+</span>
+        <span class="badge">Pongal special</span>
+        <span class="badge">Pickup & Local Delivery</span>
+      </div>
 
-            <div class="form-group">
-                <label for="cake">Cake Type</label>
-                <select id="cake">
-                    <option value="">Select Cake</option>
-                    <option value="Chocolate">Chocolate</option>
-                    <option value="Vanilla">Vanilla</option>
-                    <option value="Strawberry">Strawberry</option>
-                    <option value="Red Velvet">Red Velvet</option>
-                </select>
-            </div>
+      <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
+        <a class="btn" href="#products" aria-label="View products">Explore Sweets</a>
+        <a class="btn" style="background:#fff;color:var(--accent);border:1px solid rgba(200,90,30,0.08)" href="#about">Our Story</a>
+      </div>
 
-            <div class="form-group">
-                <label for="weight">Weight (kg)</label>
-                <select id="weight">
-                    <option value="">Select Weight</option>
-                    <option value="0.5">0.5 kg</option>
-                    <option value="1">1 kg</option>
-                    <option value="1.5">1.5 kg</option>
-                    <option value="2">2 kg</option>
-                    <option value="3">3 kg</option>
-                </select>
-            </div>
+      <div style="margin-top:18px;font-size:13px;color:var(--muted)">Batch info: <strong id="batchInfo">Made on 03-Nov-2025 • Batch #042</strong></div>
 
-            <div class="form-group toppings">
-                <label>Toppings</label>
-                <div class="checkbox-group">
-                    <label><input type="checkbox" value="Chocolate Chips"> 🍫 Chocolate Chips</label>
-                    <label><input type="checkbox" value="Fruits"> 🍓 Fruits</label>
-                    <label><input type="checkbox" value="Nuts"> 🌰 Nuts</label>
-                    <label><input type="checkbox" value="Sprinkles"> 🌈 Sprinkles</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="quantity">Quantity</label>
-                <input type="number" id="quantity" min="1" placeholder="How many cakes?">
-            </div>
-
-            <div class="form-group">
-                <label for="date">Delivery Date</label>
-                <input type="date" id="date">
-            </div>
-
-            <div class="form-group">
-                <label for="address">Delivery Address</label>
-                <textarea id="address" placeholder="Enter delivery address"></textarea>
-            </div>
-
-            <div class="form-group payment">
-                <label>Payment Mode</label>
-                <label><input type="radio" name="payment" value="Cash"> 💵 Cash</label>
-                <label><input type="radio" name="payment" value="Card"> 💳 Card</label>
-                <label><input type="radio" name="payment" value="UPI"> 📲 UPI</label>
-            </div>
-
-            <button type="submit">Order Now 🎀</button>
-        </form>
-        <p id="message"></p>
     </div>
 
-    <script src="script.js"></script>
+    <aside class="hero-media">
+      <div class="cover fade-up" id="heroMedia" role="img" aria-label="Peanut chikki">
+        <!-- Placeholder image - replace with actual product image -->
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ffe6cc,#fff);color:#666;font-size:16px;text-align:center">
+          Product Image<br><small>Replace with hero-chikki.jpg</small>
+        </div>
+      </div>
+      <div class="small-cards">
+        <div class="small">
+          <strong>Pickup in 30 mins</strong>
+          <div style="font-size:12px;color:var(--muted)">Call or WhatsApp</div>
+        </div>
+        <div class="small">
+          <strong>Handmade</strong>
+          <div style="font-size:12px;color:var(--muted)">Small daily batches</div>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section id="products" class="section">
+    <h3>Popular Sweets</h3>
+    <div class="grid" id="productGrid">
+      <!-- product cards injected by JS -->
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <h3>Our Story</h3>
+    <div style="display:flex;gap:18px;flex-wrap:wrap">
+      <div style="flex:1;min-width:280px">
+        <p>Thamahrai Mark Sweets is a small family-run shop that brings traditional Tamil village recipes to the town. We use only good jaggery and hand-roasted peanuts — no preservatives. Our recipes are passed down, and every batch is tested for crispiness.</p>
+        <ul style="color:var(--muted)">
+          <li>Fresh daily batches</li>
+          <li>Local sourcing of peanuts & coconut</li>
+          <li>Festival specials & custom gift boxes</li>
+        </ul>
+      </div>
+      <div style="width:320px">
+        <div style="background:var(--card);padding:12px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.04)">
+          <strong>Location</strong>
+          <p style="margin:6px 0;color:var(--muted)">Sattur / Virudhunagar district, Tamil Nadu</p>
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Sattur+Virudhunagar" target="_blank">Get directions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h3>What customers say</h3>
+    <div class="testimonials">
+      <div class="t-card">"Crispy and tastes like home. Bought for Diwali and everyone loved it." — <strong>Meena</strong></div>
+      <div class="t-card">"Perfect gift box and prompt pickup." — <strong>Suresh</strong></div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <h3>Contact & Order</h3>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <div style="flex:1;min-width:260px">
+        <p style="color:var(--muted)">Prefer WhatsApp? Tap the green button on the bottom-right to order directly. You can also call: <a href="tel:+919999999999">+91 99999 99999</a></p>
+        <form id="clubForm" style="display:flex;gap:8px">
+          <input name="email" placeholder="Enter phone or email" style="flex:1;padding:10px;border-radius:10px;border:1px solid #eee">
+          <button class="btn">Join club</button>
+        </form>
+      </div>
+      <div style="width:300px">
+        <div style="background:var(--card);padding:12px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.04)">
+          <strong>Hours</strong>
+          <p style="margin:6px 0;color:var(--muted)">Mon–Sun: 8:00 AM — 8:00 PM</p>
+          <strong>Payment</strong>
+          <p style="margin:6px 0;color:var(--muted)">Cash on pickup • UPI on request</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <strong>Thamahrai Mark Sweets</strong>
+      <p style="margin:6px 0;color:var(--muted)">Traditional Tamil Mittai — Sattur</p>
+    </div>
+    <div>
+      <strong>Quick links</strong>
+      <div style="display:flex;gap:8px;flex-direction:column;margin-top:6px">
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div>
+      <strong>Follow</strong>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp floating button -->
+<a class="whatsapp" id="waBtn" href="#" aria-label="Order on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+    <path d="M20.52 3.48A11.94 11.94 0 0012 0C5.373 0 .03 5.343.03 12c0 2.116.56 4.182 1.62 6.01L0 24l6.21-1.64A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12 0-3.204-1.246-6.177-3.48-8.52z" fill="#25D366"/>
+    <path d="M17.2 14.06c-.33-.16-1.95-.96-2.25-1.07-.31-.11-.54-.16-.77.16-.23.32-.9 1.07-1.11 1.29-.2.21-.41.23-.75.08-.34-.16-1.44-.53-2.74-1.69a10.4 10.4 0 01-1.93-2.3c-.2-.34-.02-.52.15-.69.16-.16.36-.41.54-.61.18-.21.24-.36.36-.6.11-.23.06-.43-.03-.6-.09-.16-.77-1.85-1.06-2.53-.28-.67-.57-.58-.77-.59-.2-.01-.43-.01-.66-.01-.23 0-.6.09-.92.42-.31.33-1.17 1.14-1.17 2.78 0 1.64 1.2 3.22 1.37 3.44.16.23 2.37 3.56 5.74 4.84 3.37 1.28 3.37.86 3.98.81.61-.05 1.94-.79 2.21-1.55.28-.75.28-1.38.2-1.51-.08-.13-.31-.22-.64-.38z" fill="#fff"/>
+  </svg>
+</a>
+
+<!-- Structured data (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Thamahrai Mark Sweets",
+  "image": "https://USERNAME.github.io/assets/images/hero-chikki.jpg",
+  "telephone": "+91-7200813835",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Sattur main road",
+    "addressLocality": "Sattur",
+    "addressRegion": "TN",
+    "postalCode": "626125",
+    "addressCountry": "IN"
+  },
+  "url": "https://USERNAME.github.io",
+  "priceRange": "₹",
+  "openingHours": "Mo-Su 08:00-20:00"
+}
+</script>
+
+<script>
+// ----------------------
+// Product data (edit / replace images in assets/images)
+// ----------------------
+const PRODUCTS = [
+  {id:1, name:'Peanut Chikki (Kadalai Mittai)', price:120, img:'assets/images/peanut-chikki.jpg', desc:'Handmade peanut chikki using roasted peanuts and jaggery. Crispy & authentic.'},
+  {id:2, name:'Sesame Chikki (Ellu Mittai)', price:100, img:'assets/images/sesame-chikki.jpg', desc:'Toasty sesame seeds bound with pure jaggery. Ideal festival treat.'},
+  {id:3, name:'Coconut Chikki', price:130, img:'assets/images/coconut-chikki.jpg', desc:'Fresh coconut and jaggery — soft, fragrant and traditional.'}
+];
+
+// render products
+const grid = document.getElementById('productGrid');
+function createCard(p){
+  const el = document.createElement('article');
+  el.className='card fade-up';
+  el.innerHTML = `
+    <div class="product-media">
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f7f0ea;color:#666;font-size:14px;text-align:center">
+        ${p.name}<br><small>Replace with product image</small>
+      </div>
+    </div>
+    <h4 style="margin:8px 0 4px;font-size:16px">${p.name}</h4>
+    <div class='p-desc'>${p.desc}</div>
+    <div class='meta'>
+      <div class='price'>₹ ${p.price}</div>
+      <div>
+        <a class='btn' href='#' data-id='${p.id}' onclick='orderWhatsApp(event)'>Order</a>
+      </div>
+    </div>
+  `;
+  return el;
+}
+PRODUCTS.forEach(p=> grid.appendChild(createCard(p)));
+
+// Compose whatsapp message and open
+const PHONE = '+917200813835'; // <-- replace with shop phone
+function orderWhatsApp(e){
+  e.preventDefault();
+  const id = e.currentTarget.dataset.id;
+  const p = PRODUCTS.find(x=>x.id==id);
+  const qty = 1;
+  const msg = encodeURIComponent(`Hi, I'd like to order ${qty} x ${p.name} (₹${p.price}). My pickup/delivery preference: `);
+  const url = `https://wa.me/${PHONE.replace(/\D/g,'')}?text=${msg}`;
+  window.open(url,'_blank');
+}
+
+// simple in-view animation
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting) en.target.classList.add('inview');
+  });
+},{threshold:0.12});
+document.querySelectorAll('.fade-up').forEach(n=>io.observe(n));
+
+// club form quick handler
+const clubForm = document.getElementById('clubForm');
+clubForm.addEventListener('submit', (ev)=>{
+  ev.preventDefault();
+  const val = clubForm.email.value.trim();
+  if(!val){ alert('enter phone or email'); return; }
+  alert('Thanks! We saved your contact.');
+  clubForm.reset();
+});
+
+// set batch info dynamically (example)
+(function setBatch(){
+  const el = document.getElementById('batchInfo');
+  const d = new Date();
+  const dStr = d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  el.textContent = `Made on ${dStr} • Batch #042`;
+})();
+
+// WhatsApp button functionality
+document.getElementById('waBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  const msg = encodeURIComponent('Hi, I would like to place an order from Thamahrai Mark Sweets.');
+  const url = `https://wa.me/${PHONE.replace(/\D/g,'')}?text=${msg}`;
+  window.open(url, '_blank');
+});
+</script>
 </body>
 </html>
