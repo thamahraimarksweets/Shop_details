@@ -6,8 +6,7 @@
   <title>Thamahrai Mark Sweets — Authentic Tamil Mittai</title>
   <meta name="description" content="Thamahrai Mark Sweets — traditional peanut chikki, sesame & coconut mittai made with jaggery. Order via WhatsApp.">
   <meta name="keywords" content="Tamil sweets, chikki, peanut chikki, sesame mittai, jaggery sweets, Thamahrai">
-  <link rel="canonical" href="https://thamahraimarksweets.github.io/Shop_details/
-">
+  <link rel="canonical" href="https://thamahraimarksweets.github.io/Shop_details/">
 
   <!-- Google font (replace with local if desired) -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Mukta:wght@300;600&display=swap" rel="stylesheet">
@@ -32,9 +31,13 @@
     .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px;box-shadow:0 6px 20px rgba(200,90,30,0.12)}
     .brand h1{font-size:18px;margin:0}
     .brand p{margin:0;font-size:12px;color:var(--muted)}
-    nav{display:flex;gap:12px}
+    nav{display:flex;gap:12px;align-items:center}
     nav a{font-weight:600;color:#333;text-decoration:none;padding:8px 12px;border-radius:10px}
     nav a.cta{background:var(--accent);color:#fff}
+
+    /* Cart Icon */
+    .cart-icon{position:relative;cursor:pointer;padding:8px 12px;border-radius:10px;background:rgba(200,90,30,0.1);color:var(--accent)}
+    .cart-count{position:absolute;top:-8px;right:-8px;background:var(--accent);color:white;border-radius:50%;width:20px;height:20px;font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:700}
 
     /* Hero */
     .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;padding:24px;align-items:center}
@@ -55,13 +58,55 @@
     .section{padding:24px}
     .section h3{margin:0 0 12px}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .card{background:var(--card);border-radius:14px;padding:12px;box-shadow:0 6px 18px rgba(30,20,10,0.04);overflow:hidden}
+    .card{background:var(--card);border-radius:14px;padding:12px;box-shadow:0 6px 18px rgba(30,20,10,0.04);overflow:hidden;transition:transform 0.3s ease, box-shadow 0.3s ease}
+    .card:hover{transform:translateY(-5px);box-shadow:0 12px 25px rgba(30,20,10,0.08)}
     .product-media{height:160px;border-radius:10px;background:#f7f0ea;display:flex;align-items:center;justify-content:center;overflow:hidden}
     .product-media img{width:100%;height:100%;object-fit:cover}
     .meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
     .price{font-weight:700;color:var(--accent)}
     .p-desc{font-size:13px;color:var(--muted);margin:8px 0}
-    .btn{display:inline-block;padding:8px 12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-weight:700;text-decoration:none;cursor:pointer}
+    .btn{display:inline-block;padding:8px 12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-weight:700;text-decoration:none;cursor:pointer;transition:all 0.3s ease}
+    .btn:hover{background:var(--accent-2);transform:translateY(-2px)}
+    .btn-outline{background:#fff;color:var(--accent);border:1px solid rgba(200,90,30,0.2)}
+    .btn-outline:hover{background:rgba(200,90,30,0.1)}
+
+    /* Quantity Controls */
+    .quantity-controls{display:flex;align-items:center;gap:8px;margin:8px 0}
+    .qty-btn{width:32px;height:32px;border-radius:8px;border:1px solid rgba(200,90,30,0.2);background:#fff;color:var(--accent);font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center}
+    .qty-btn:hover{background:rgba(200,90,30,0.1)}
+    .qty-display{min-width:40px;text-align:center;font-weight:600}
+
+    /* Cart Sidebar */
+    .cart-sidebar{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--card);box-shadow:-5px 0 25px rgba(0,0,0,0.1);z-index:1000;transition:right 0.3s ease;padding:20px;display:flex;flex-direction:column}
+    .cart-sidebar.open{right:0}
+    .cart-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:999;display:none}
+    .cart-overlay.active{display:block}
+    .cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid rgba(0,0,0,0.1)}
+    .cart-title{font-size:20px;font-weight:700;margin:0}
+    .close-cart{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted)}
+    .cart-items{flex:1;overflow-y:auto}
+    .cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.05)}
+    .cart-item-img{width:60px;height:60px;border-radius:8px;background:#f7f0ea;display:flex;align-items:center;justify-content:center}
+    .cart-item-details{flex:1}
+    .cart-item-name{font-weight:600;margin:0 0 4px}
+    .cart-item-price{color:var(--accent);font-weight:700;margin:0}
+    .cart-item-controls{display:flex;align-items:center;gap:8px;margin-top:8px}
+    .remove-item{color:var(--muted);background:none;border:none;cursor:pointer;font-size:12px}
+    .cart-footer{padding-top:20px;border-top:1px solid rgba(0,0,0,0.1)}
+    .cart-total{display:flex;justify-content:space-between;font-weight:700;font-size:18px;margin-bottom:15px}
+    .cart-actions{display:flex;flex-direction:column;gap:10px}
+    .empty-cart{text-align:center;padding:40px 20px;color:var(--muted)}
+
+    /* Toast Notification */
+    .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:var(--accent);color:white;padding:12px 20px;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,0.2);z-index:1001;display:none;align-items:center;gap:10px}
+    .toast.show{display:flex;animation:fadeInOut 3s ease}
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
 
     /* testimonials */
     .testimonials{display:flex;gap:12px;align-items:center}
@@ -79,12 +124,14 @@
     @media (max-width:1000px){
       .hero{grid-template-columns:1fr 1fr}
       .grid{grid-template-columns:repeat(2,1fr)}
+      .cart-sidebar{width:340px}
     }
     @media (max-width:720px){
       header{padding:12px}
       .hero{grid-template-columns:1fr;gap:14px;padding:12px}
       .grid{grid-template-columns:1fr}
-      nav{display:none}
+      nav a:not(.cta){display:none}
+      .cart-sidebar{width:100%;right:-100%}
     }
 
     /* simple animation */
@@ -107,6 +154,9 @@
     <a href="#products">Products</a>
     <a href="#about">About</a>
     <a href="#contact" class="cta">Order via WhatsApp</a>
+    <div class="cart-icon" id="cartIcon">
+      🛒 Cart <span class="cart-count" id="cartCount">0</span>
+    </div>
   </nav>
 </header>
 
@@ -124,7 +174,7 @@
 
       <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
         <a class="btn" href="#products" aria-label="View products">Explore Sweets</a>
-        <a class="btn" style="background:#fff;color:var(--accent);border:1px solid rgba(200,90,30,0.08)" href="#about">Our Story</a>
+        <a class="btn btn-outline" href="#about">Our Story</a>
       </div>
 
       <div style="margin-top:18px;font-size:13px;color:var(--muted)">Batch info: <strong id="batchInfo">Made on 03-Nov-2025 • Batch #042</strong></div>
@@ -234,6 +284,37 @@
   </div>
 </footer>
 
+<!-- Cart Sidebar -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3 class="cart-title">Your Order</h3>
+    <button class="close-cart" id="closeCart">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <!-- Cart items will be injected here -->
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total:</span>
+      <span id="cartTotalAmount">₹ 0</span>
+    </div>
+    <div class="cart-actions">
+      <button class="btn" id="checkoutWhatsApp" style="width:100%">
+        Order via WhatsApp
+      </button>
+      <button class="btn btn-outline" id="clearCart" style="width:100%">
+        Clear Cart
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast">
+  <span id="toastMessage">Item added to cart!</span>
+</div>
+
 <!-- WhatsApp floating button -->
 <a class="whatsapp" id="waBtn" href="#" aria-label="Order on WhatsApp">
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
@@ -274,41 +355,227 @@ const PRODUCTS = [
   {id:3, name:'Coconut Chikki', price:130, img:'assets/images/coconut-chikki.jpg', desc:'Fresh coconut and jaggery — soft, fragrant and traditional.'}
 ];
 
-// render products
-const grid = document.getElementById('productGrid');
-function createCard(p){
-  const el = document.createElement('article');
-  el.className='card fade-up';
-  el.innerHTML = `
-    <div class="product-media">
-      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f7f0ea;color:#666;font-size:14px;text-align:center">
-        ${p.name}<br><small>Replace with product image</small>
-      </div>
-    </div>
-    <h4 style="margin:8px 0 4px;font-size:16px">${p.name}</h4>
-    <div class='p-desc'>${p.desc}</div>
-    <div class='meta'>
-      <div class='price'>₹ ${p.price}</div>
-      <div>
-        <a class='btn' href='#' data-id='${p.id}' onclick='orderWhatsApp(event)'>Order</a>
-      </div>
-    </div>
-  `;
-  return el;
-}
-PRODUCTS.forEach(p=> grid.appendChild(createCard(p)));
+// Cart state
+let cart = JSON.parse(localStorage.getItem('thamahraiCart')) || [];
 
-// Compose whatsapp message and open
-const PHONE = '+917200813835'; // <-- replace with shop phone
-function orderWhatsApp(e){
-  e.preventDefault();
-  const id = e.currentTarget.dataset.id;
-  const p = PRODUCTS.find(x=>x.id==id);
-  const qty = 1;
-  const msg = encodeURIComponent(`Hi, I'd like to order ${qty} x ${p.name} (₹${p.price}). My pickup/delivery preference: `);
-  const url = `https://wa.me/${PHONE.replace(/\D/g,'')}?text=${msg}`;
-  window.open(url,'_blank');
+// DOM elements
+const cartIcon = document.getElementById('cartIcon');
+const cartCount = document.getElementById('cartCount');
+const cartSidebar = document.getElementById('cartSidebar');
+const cartOverlay = document.getElementById('cartOverlay');
+const closeCart = document.getElementById('closeCart');
+const cartItems = document.getElementById('cartItems');
+const cartTotalAmount = document.getElementById('cartTotalAmount');
+const checkoutWhatsApp = document.getElementById('checkoutWhatsApp');
+const clearCartBtn = document.getElementById('clearCart');
+const toast = document.getElementById('toast');
+const toastMessage = document.getElementById('toastMessage');
+
+// Initialize
+updateCartCount();
+renderProducts();
+
+// ----------------------
+// Product rendering
+// ----------------------
+function renderProducts() {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = '';
+  
+  PRODUCTS.forEach(product => {
+    const card = document.createElement('article');
+    card.className = 'card fade-up';
+    card.innerHTML = `
+      <div class="product-media">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f7f0ea;color:#666;font-size:14px;text-align:center">
+          ${product.name}<br><small>Replace with product image</small>
+        </div>
+      </div>
+      <h4 style="margin:8px 0 4px;font-size:16px">${product.name}</h4>
+      <div class='p-desc'>${product.desc}</div>
+      <div class='meta'>
+        <div class='price'>₹ ${product.price}</div>
+      </div>
+      <div class="quantity-controls">
+        <button class="qty-btn" onclick="decreaseQuantity(${product.id})">-</button>
+        <span class="qty-display" id="qty-${product.id}">${getProductQuantity(product.id)}</span>
+        <button class="qty-btn" onclick="increaseQuantity(${product.id})">+</button>
+      </div>
+      <button class="btn" onclick="addToCart(${product.id})" style="width:100%">
+        Add to Cart
+      </button>
+    `;
+    grid.appendChild(card);
+  });
 }
+
+// ----------------------
+// Cart functionality
+// ----------------------
+function getProductQuantity(productId) {
+  const item = cart.find(item => item.id === productId);
+  return item ? item.quantity : 0;
+}
+
+function increaseQuantity(productId) {
+  const product = PRODUCTS.find(p => p.id === productId);
+  const existingItem = cart.find(item => item.id === productId);
+  
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({...product, quantity: 1});
+  }
+  
+  updateCart();
+  document.getElementById(`qty-${productId}`).textContent = getProductQuantity(productId);
+}
+
+function decreaseQuantity(productId) {
+  const existingItem = cart.find(item => item.id === productId);
+  
+  if (existingItem) {
+    existingItem.quantity -= 1;
+    if (existingItem.quantity <= 0) {
+      cart = cart.filter(item => item.id !== productId);
+    }
+  }
+  
+  updateCart();
+  document.getElementById(`qty-${productId}`).textContent = getProductQuantity(productId);
+}
+
+function addToCart(productId) {
+  increaseQuantity(productId);
+  showToast('Item added to cart!');
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter(item => item.id !== productId);
+  updateCart();
+  renderProducts(); // Update product quantities
+}
+
+function updateCart() {
+  // Save to localStorage
+  localStorage.setItem('thamahraiCart', JSON.stringify(cart));
+  
+  // Update cart count
+  updateCartCount();
+  
+  // Render cart items
+  renderCartItems();
+}
+
+function updateCartCount() {
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  cartCount.textContent = totalItems;
+}
+
+function renderCartItems() {
+  if (cart.length === 0) {
+    cartItems.innerHTML = '<div class="empty-cart">Your cart is empty<br><small>Add some delicious sweets!</small></div>';
+    cartTotalAmount.textContent = '₹ 0';
+    return;
+  }
+  
+  let itemsHTML = '';
+  let total = 0;
+  
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    
+    itemsHTML += `
+      <div class="cart-item">
+        <div class="cart-item-img">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f7f0ea;color:#666;font-size:12px;text-align:center">
+            ${item.name.substring(0, 15)}...
+          </div>
+        </div>
+        <div class="cart-item-details">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">₹ ${item.price} × ${item.quantity} = ₹ ${itemTotal}</div>
+          <div class="cart-item-controls">
+            <button class="qty-btn" onclick="decreaseQuantity(${item.id})">-</button>
+            <span class="qty-display">${item.quantity}</span>
+            <button class="qty-btn" onclick="increaseQuantity(${item.id})">+</button>
+            <button class="remove-item" onclick="removeFromCart(${item.id})">Remove</button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  
+  cartItems.innerHTML = itemsHTML;
+  cartTotalAmount.textContent = `₹ ${total}`;
+}
+
+function clearCart() {
+  cart = [];
+  updateCart();
+  renderProducts();
+  showToast('Cart cleared');
+}
+
+function showToast(message) {
+  toastMessage.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+// ----------------------
+// WhatsApp ordering
+// ----------------------
+function sendWhatsAppOrder() {
+  if (cart.length === 0) {
+    showToast('Add items to cart first!');
+    return;
+  }
+  
+  const PHONE = '+917200813835';
+  let message = "Hi, I'd like to order from Thamahrai Mark Sweets:\n\n";
+  let total = 0;
+  
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    message += `• ${item.quantity} x ${item.name} - ₹${itemTotal}\n`;
+    total += itemTotal;
+  });
+  
+  message += `\nTotal: ₹${total}\n\nMy pickup/delivery preference: `;
+  
+  const url = `https://wa.me/${PHONE.replace(/\D/g,'')}?text=${encodeURIComponent(message)}`;
+  window.open(url, '_blank');
+}
+
+// ----------------------
+// Event listeners
+// ----------------------
+cartIcon.addEventListener('click', () => {
+  cartSidebar.classList.add('open');
+  cartOverlay.classList.add('active');
+});
+
+closeCart.addEventListener('click', () => {
+  cartSidebar.classList.remove('open');
+  cartOverlay.classList.remove('active');
+});
+
+cartOverlay.addEventListener('click', () => {
+  cartSidebar.classList.remove('open');
+  cartOverlay.classList.remove('active');
+});
+
+checkoutWhatsApp.addEventListener('click', sendWhatsAppOrder);
+clearCartBtn.addEventListener('click', clearCart);
+
+// ----------------------
+// Existing functionality
+// ----------------------
+const PHONE = '+917200813835';
 
 // simple in-view animation
 const io = new IntersectionObserver((entries)=>{
@@ -346,6 +613,3 @@ document.getElementById('waBtn').addEventListener('click', function(e) {
 </script>
 </body>
 </html>
-
-
-
