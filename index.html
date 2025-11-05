@@ -57,13 +57,26 @@
     /* Products */
     .section{padding:24px}
     .section h3{margin:0 0 12px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .card{background:var(--card);border-radius:14px;padding:12px;box-shadow:0 6px 18px rgba(30,20,10,0.04);overflow:hidden;transition:transform 0.3s ease, box-shadow 0.3s ease}
+    
+    /* Category Section */
+    .category-section {margin-bottom: 40px;}
+    .category-title {font-size: 22px; margin-bottom: 16px; color: var(--accent); display: flex; align-items: center; gap: 8px;}
+    .category-title:before {content: ''; display: block; width: 4px; height: 22px; background: var(--accent-2); border-radius: 2px;}
+    
+    /* Horizontal Scrolling Product Grid */
+    .horizontal-scroll {display: flex; gap: 16px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin; scrollbar-color: var(--accent) transparent;}
+    .horizontal-scroll::-webkit-scrollbar {height: 6px;}
+    .horizontal-scroll::-webkit-scrollbar-track {background: rgba(200,90,30,0.1); border-radius: 3px;}
+    .horizontal-scroll::-webkit-scrollbar-thumb {background: var(--accent); border-radius: 3px;}
+    .horizontal-scroll::-webkit-scrollbar-thumb:hover {background: var(--accent-2);}
+    
+    .card{background:var(--card);border-radius:14px;padding:12px;box-shadow:0 6px 18px rgba(30,20,10,0.04);overflow:hidden;transition:transform 0.3s ease, box-shadow 0.3s ease; min-width: 220px; flex-shrink: 0;}
     .card:hover{transform:translateY(-5px);box-shadow:0 12px 25px rgba(30,20,10,0.08)}
     .product-media{height:160px;border-radius:10px;background:#f7f0ea;display:flex;align-items:center;justify-content:center;overflow:hidden}
     .product-media img{width:100%;height:100%;object-fit:cover}
     .meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
     .price{font-weight:700;color:var(--accent)}
+    .weight{font-size: 12px; color: var(--muted); margin-top: 4px;}
     .p-desc{font-size:13px;color:var(--muted);margin:8px 0}
     .btn{display:inline-block;padding:8px 12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-weight:700;text-decoration:none;cursor:pointer;transition:all 0.3s ease}
     .btn:hover{background:var(--accent-2);transform:translateY(-2px)}
@@ -123,15 +136,14 @@
     /* responsive */
     @media (max-width:1000px){
       .hero{grid-template-columns:1fr 1fr}
-      .grid{grid-template-columns:repeat(2,1fr)}
       .cart-sidebar{width:340px}
     }
     @media (max-width:720px){
       header{padding:12px}
       .hero{grid-template-columns:1fr;gap:14px;padding:12px}
-      .grid{grid-template-columns:1fr}
       nav a:not(.cta){display:none}
       .cart-sidebar{width:100%;right:-100%}
+      .category-title {font-size: 18px;}
     }
 
     /* simple animation */
@@ -202,10 +214,40 @@
   </section>
 
   <section id="products" class="section">
-    <h3>Popular Sweets</h3>
-    <div class="grid" id="productGrid">
-      <!-- product cards injected by JS -->
+    <h3>Our Sweets Collection</h3>
+    
+    <!-- Mini Bars Category -->
+    <div class="category-section">
+      <h4 class="category-title">Mini Bars (50g-100g)</h4>
+      <div class="horizontal-scroll" id="miniBarsGrid">
+        <!-- Mini bars products will be injected here -->
+      </div>
     </div>
+    
+    <!-- Jars Category -->
+    <div class="category-section">
+      <h4 class="category-title">Jars (500g-1kg)</h4>
+      <div class="horizontal-scroll" id="jarsGrid">
+        <!-- Jars products will be injected here -->
+      </div>
+    </div>
+    
+    <!-- Combo Packs Category -->
+    <div class="category-section">
+      <h4 class="category-title">Combo Packs</h4>
+      <div class="horizontal-scroll" id="comboPacksGrid">
+        <!-- Combo packs products will be injected here -->
+      </div>
+    </div>
+    
+    <!-- Traditional Sweets Category -->
+    <div class="category-section">
+      <h4 class="category-title">Traditional Sweets</h4>
+      <div class="horizontal-scroll" id="traditionalSweetsGrid">
+        <!-- Traditional sweets products will be injected here -->
+      </div>
+    </div>
+    
   </section>
 
   <section id="about" class="section">
@@ -350,9 +392,53 @@
 // Product data (edit / replace images in assets/images)
 // ----------------------
 const PRODUCTS = [
-  {id:1, name:'Peanut Chikki (Kadalai Mittai)', price:120, img:'assets/images/peanut-chikki.jpg', desc:'Handmade peanut chikki using roasted peanuts and jaggery. Crispy & authentic.'},
-  {id:2, name:'Sesame Chikki (Ellu Mittai)', price:100, img:'assets/images/sesame-chikki.jpg', desc:'Toasty sesame seeds bound with pure jaggery. Ideal festival treat.'},
-  {id:3, name:'Coconut Chikki', price:130, img:'assets/images/coconut-chikki.jpg', desc:'Fresh coconut and jaggery — soft, fragrant and traditional.'}
+  // Mini Bars (50g-100g)
+  {id:1, category:'miniBars', name:'Peanut Chikki Mini Bar', price:40, weight:'50g', img:'assets/images/peanut-chikki-mini.jpg', desc:'Handmade peanut chikki using roasted peanuts and jaggery. Crispy & authentic.'},
+  {id:2, category:'miniBars', name:'Sesame Chikki Mini Bar', price:35, weight:'50g', img:'assets/images/sesame-chikki-mini.jpg', desc:'Toasty sesame seeds bound with pure jaggery. Ideal festival treat.'},
+  {id:3, category:'miniBars', name:'Coconut Chikki Mini Bar', price:45, weight:'50g', img:'assets/images/coconut-chikki-mini.jpg', desc:'Fresh coconut and jaggery — soft, fragrant and traditional.'},
+  {id:4, category:'miniBars', name:'Mixed Nut Chikki Mini Bar', price:60, weight:'50g', img:'assets/images/mixed-nut-chikki-mini.jpg', desc:'Premium mix of cashews, almonds and peanuts with jaggery.'},
+  {id:5, category:'miniBars', name:'Puffed Rice Chikki Mini Bar', price:30, weight:'50g', img:'assets/images/puffed-rice-chikki-mini.jpg', desc:'Light and crispy puffed rice with jaggery coating.'},
+  {id:6, category:'miniBars', name:'Groundnut Chikki Mini Bar', price:35, weight:'50g', img:'assets/images/groundnut-chikki-mini.jpg', desc:'Classic groundnut chikki with traditional taste.'},
+  {id:7, category:'miniBars', name:'Jaggery Candy Mini Bar', price:25, weight:'50g', img:'assets/images/jaggery-candy-mini.jpg', desc:'Pure jaggery candy with hint of ginger flavor.'},
+  {id:8, category:'miniBars', name:'Badam Chikki Mini Bar', price:70, weight:'50g', img:'assets/images/badam-chikki-mini.jpg', desc:'Premium almond chikki with pure jaggery.'},
+  {id:9, category:'miniBars', name:'Cashew Chikki Mini Bar', price:80, weight:'50g', img:'assets/images/cashew-chikki-mini.jpg', desc:'Rich cashew chikki with traditional jaggery.'},
+  {id:10, category:'miniBars', name:'Til Chikki Mini Bar', price:40, weight:'50g', img:'assets/images/til-chikki-mini.jpg', desc:'Sesame seed chikki with perfect crunch.'},
+  
+  // Jars (500g-1kg)
+  {id:11, category:'jars', name:'Peanut Chikki Jar', price:350, weight:'500g', img:'assets/images/peanut-chikki-jar.jpg', desc:'Handmade peanut chikki using roasted peanuts and jaggery. Crispy & authentic.'},
+  {id:12, category:'jars', name:'Sesame Chikki Jar', price:320, weight:'500g', img:'assets/images/sesame-chikki-jar.jpg', desc:'Toasty sesame seeds bound with pure jaggery. Ideal festival treat.'},
+  {id:13, category:'jars', name:'Coconut Chikki Jar', price:380, weight:'500g', img:'assets/images/coconut-chikki-jar.jpg', desc:'Fresh coconut and jaggery — soft, fragrant and traditional.'},
+  {id:14, category:'jars', name:'Mixed Nut Chikki Jar', price:550, weight:'500g', img:'assets/images/mixed-nut-chikki-jar.jpg', desc:'Premium mix of cashews, almonds and peanuts with jaggery.'},
+  {id:15, category:'jars', name:'Puffed Rice Chikki Jar', price:280, weight:'500g', img:'assets/images/puffed-rice-chikki-jar.jpg', desc:'Light and crispy puffed rice with jaggery coating.'},
+  {id:16, category:'jars', name:'Groundnut Chikki Jar', price:320, weight:'500g', img:'assets/images/groundnut-chikki-jar.jpg', desc:'Classic groundnut chikki with traditional taste.'},
+  {id:17, category:'jars', name:'Jaggery Candy Jar', price:250, weight:'500g', img:'assets/images/jaggery-candy-jar.jpg', desc:'Pure jaggery candy with hint of ginger flavor.'},
+  {id:18, category:'jars', name:'Badam Chikki Jar', price:650, weight:'500g', img:'assets/images/badam-chikki-jar.jpg', desc:'Premium almond chikki with pure jaggery.'},
+  {id:19, category:'jars', name:'Cashew Chikki Jar', price:720, weight:'500g', img:'assets/images/cashew-chikki-jar.jpg', desc:'Rich cashew chikki with traditional jaggery.'},
+  {id:20, category:'jars', name:'Til Chikki Jar', price:350, weight:'500g', img:'assets/images/til-chikki-jar.jpg', desc:'Sesame seed chikki with perfect crunch.'},
+  
+  // Combo Packs
+  {id:21, category:'comboPacks', name:'Chikki Variety Combo', price:600, weight:'Assorted 750g', img:'assets/images/chikki-variety-combo.jpg', desc:'Assorted chikki pack with 5 different flavors.'},
+  {id:22, category:'comboPacks', name:'Festival Special Combo', price:850, weight:'Assorted 1kg', img:'assets/images/festival-special-combo.jpg', desc:'Perfect for festivals with premium chikki varieties.'},
+  {id:23, category:'comboPacks', name:'Nut Lovers Combo', price:1200, weight:'Assorted 800g', img:'assets/images/nut-lovers-combo.jpg', desc:'Premium nut-based chikki varieties for nut lovers.'},
+  {id:24, category:'comboPacks', name:'Traditional Mittai Combo', price:750, weight:'Assorted 900g', img:'assets/images/traditional-mittai-combo.jpg', desc:'Traditional Tamil sweets combo with chikki and other mittais.'},
+  {id:25, category:'comboPacks', name:'Family Pack Combo', price:950, weight:'Assorted 1.2kg', img:'assets/images/family-pack-combo.jpg', desc:'Large combo pack perfect for family gatherings.'},
+  {id:26, category:'comboPacks', name:'Gift Box Combo', price:1100, weight:'Assorted 1kg', img:'assets/images/gift-box-combo.jpg', desc:'Elegantly packaged gift box with assorted chikkis.'},
+  {id:27, category:'comboPacks', name:'Mini Bars Combo', price:450, weight:'Assorted 500g', img:'assets/images/mini-bars-combo.jpg', desc:'Assorted mini bars perfect for sampling.'},
+  {id:28, category:'comboPacks', name:'Premium Combo', price:1500, weight:'Assorted 1kg', img:'assets/images/premium-combo.jpg', desc:'Premium combo with exclusive chikki varieties.'},
+  {id:29, category:'comboPacks', name:'Diwali Special Combo', price:1300, weight:'Assorted 1.5kg', img:'assets/images/diwali-special-combo.jpg', desc:'Special Diwali combo with festive packaging.'},
+  {id:30, category:'comboPacks', name:'Pongal Special Combo', price:900, weight:'Assorted 1kg', img:'assets/images/pongal-special-combo.jpg', desc:'Traditional Pongal special combo with jaggery sweets.'},
+  
+  // Traditional Sweets
+  {id:31, category:'traditionalSweets', name:'Mysore Pak', price:400, weight:'500g', img:'assets/images/mysore-pak.jpg', desc:'Rich and melt-in-mouth Mysore pak made with ghee.'},
+  {id:32, category:'traditionalSweets', name:'Badusha', price:380, weight:'500g', img:'assets/images/badusha.jpg', desc:'Flaky and sweet badusha with perfect texture.'},
+  {id:33, category:'traditionalSweets', name:'Jangiri', price:350, weight:'500g', img:'assets/images/jangiri.jpg', desc:'Crispy and syrupy jangiri, a traditional favorite.'},
+  {id:34, category:'traditionalSweets', name:'Laddu', price:320, weight:'500g', img:'assets/images/laddu.jpg', desc:'Soft and delicious boondi laddu with nuts.'},
+  {id:35, category:'traditionalSweets', name:'Halwa', price:300, weight:'500g', img:'assets/images/halwa.jpg', desc:'Wheat halwa with ghee and jaggery.'},
+  {id:36, category:'traditionalSweets', name:'Adhirasam', price:280, weight:'500g', img:'assets/images/adhirasam.jpg', desc:'Traditional Tamil adhirasam made with rice flour and jaggery.'},
+  {id:37, category:'traditionalSweets', name:'Kaju Katli', price:600, weight:'500g', img:'assets/images/kaju-katli.jpg', desc:'Premium cashew katli with silver leaf.'},
+  {id:38, category:'traditionalSweets', name:'Palkova', price:450, weight:'500g', img:'assets/images/palkova.jpg', desc:'Milk-based sweet palkova with rich texture.'},
+  {id:39, category:'traditionalSweets', name:'Rava Kesari', price:250, weight:'500g', img:'assets/images/rava-kesari.jpg', desc:'Semolina kesari with saffron and nuts.'},
+  {id:40, category:'traditionalSweets', name:'Milk Peda', price:380, weight:'500g', img:'assets/images/milk-peda.jpg', desc:'Soft milk peda with cardamom flavor.'}
 ];
 
 // Cart state
@@ -379,10 +465,19 @@ renderProducts();
 // Product rendering
 // ----------------------
 function renderProducts() {
-  const grid = document.getElementById('productGrid');
-  grid.innerHTML = '';
+  renderCategory('miniBars', 'miniBarsGrid');
+  renderCategory('jars', 'jarsGrid');
+  renderCategory('comboPacks', 'comboPacksGrid');
+  renderCategory('traditionalSweets', 'traditionalSweetsGrid');
+}
+
+function renderCategory(category, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
   
-  PRODUCTS.forEach(product => {
+  const categoryProducts = PRODUCTS.filter(product => product.category === category);
+  
+  categoryProducts.forEach(product => {
     const card = document.createElement('article');
     card.className = 'card fade-up';
     card.innerHTML = `
@@ -393,6 +488,7 @@ function renderProducts() {
       </div>
       <h4 style="margin:8px 0 4px;font-size:16px">${product.name}</h4>
       <div class='p-desc'>${product.desc}</div>
+      <div class='weight'>${product.weight}</div>
       <div class='meta'>
         <div class='price'>₹ ${product.price}</div>
       </div>
@@ -405,7 +501,7 @@ function renderProducts() {
         Add to Cart
       </button>
     `;
-    grid.appendChild(card);
+    container.appendChild(card);
   });
 }
 
@@ -541,7 +637,7 @@ function sendWhatsAppOrder() {
   
   cart.forEach(item => {
     const itemTotal = item.price * item.quantity;
-    message += `• ${item.quantity} x ${item.name} - ₹${itemTotal}\n`;
+    message += `• ${item.quantity} x ${item.name} (${item.weight}) - ₹${itemTotal}\n`;
     total += itemTotal;
   });
   
