@@ -466,6 +466,41 @@ const clearCartBtn = document.getElementById('clearCart');
 const toast = document.getElementById('toast');
 const toastMessage = document.getElementById('toastMessage');
 
+// ----------------------
+// Back button handling
+// ----------------------
+let cartOpen = false;
+let historyStateAdded = false;
+
+function openCart() {
+  cartSidebar.classList.add('open');
+  cartOverlay.classList.add('active');
+  cartOpen = true;
+  
+  // Add history state when opening cart
+  if (!historyStateAdded) {
+    history.pushState({ cartOpen: true }, '', window.location.href);
+    historyStateAdded = true;
+  }
+}
+
+function closeCartSidebar() {
+  cartSidebar.classList.remove('open');
+  cartOverlay.classList.remove('active');
+  cartOpen = false;
+  historyStateAdded = false;
+}
+
+// Handle browser back button
+window.addEventListener('popstate', function(event) {
+  if (cartOpen) {
+    closeCartSidebar();
+    
+    // Prevent default back navigation
+    history.pushState({ cartOpen: false }, '', window.location.href);
+  }
+});
+
 // Initialize
 updateCartCount();
 renderProducts();
@@ -659,20 +694,11 @@ function sendWhatsAppOrder() {
 // ----------------------
 // Event listeners
 // ----------------------
-cartIcon.addEventListener('click', () => {
-  cartSidebar.classList.add('open');
-  cartOverlay.classList.add('active');
-});
+cartIcon.addEventListener('click', openCart);
 
-closeCart.addEventListener('click', () => {
-  cartSidebar.classList.remove('open');
-  cartOverlay.classList.remove('active');
-});
+closeCart.addEventListener('click', closeCartSidebar);
 
-cartOverlay.addEventListener('click', () => {
-  cartSidebar.classList.remove('open');
-  cartOverlay.classList.remove('active');
-});
+cartOverlay.addEventListener('click', closeCartSidebar);
 
 checkoutWhatsApp.addEventListener('click', sendWhatsAppOrder);
 clearCartBtn.addEventListener('click', clearCart);
