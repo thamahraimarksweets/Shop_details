@@ -444,12 +444,22 @@
       flex-shrink: 0;
     }
 
+    /* Special card style for jars with vertical images */
+    .card.jar-card {
+      height: 450px; /* Increased height for jars */
+    }
+
     .product-media {
       height: 200px;
       width: 100%;
       border-radius: 12px;
       overflow: hidden;
       background: #f7eee4;
+    }
+
+    /* Special media style for jars */
+    .jar-card .product-media {
+      height: 250px; /* Increased height for jar images */
     }
 
     .product-media img {
@@ -725,39 +735,47 @@
     </aside>
   </section>
 
-  <!-- REST OF THE CODE REMAINS THE SAME -->
+  <!-- UPDATED PRODUCTS SECTION WITH 5 CATEGORIES -->
   <section id="products" class="section">
     <h3>Our Sweets Collection</h3>
     
     <!-- Mini Bars Category -->
     <div class="category-section">
-      <h4 class="category-title">Mini Bars (50g-100g)</h4>
+      <h4 class="category-title">Mini Bars (6 products)</h4>
       <div class="horizontal-scroll" id="miniBarsGrid">
         <!-- Mini bars products will be injected here -->
       </div>
     </div>
     
+    <!-- Bars Category -->
+    <div class="category-section">
+      <h4 class="category-title">Bars (8 products)</h4>
+      <div class="horizontal-scroll" id="barsGrid">
+        <!-- Bars products will be injected here -->
+      </div>
+    </div>
+    
     <!-- Jars Category -->
     <div class="category-section">
-      <h4 class="category-title">Jars (500g-1kg)</h4>
+      <h4 class="category-title">Jars (5 products)</h4>
       <div class="horizontal-scroll" id="jarsGrid">
         <!-- Jars products will be injected here -->
       </div>
     </div>
     
-    <!-- Combo Packs Category -->
+    <!-- Boxes Category -->
     <div class="category-section">
-      <h4 class="category-title">Combo Packs</h4>
-      <div class="horizontal-scroll" id="comboPacksGrid">
-        <!-- Combo packs products will be injected here -->
+      <h4 class="category-title">Boxes (8 products)</h4>
+      <div class="horizontal-scroll" id="boxesGrid">
+        <!-- Boxes products will be injected here -->
       </div>
     </div>
     
-    <!-- Traditional Sweets Category -->
+    <!-- Packs & Balls Category -->
     <div class="category-section">
-      <h4 class="category-title">Traditional Sweets</h4>
-      <div class="horizontal-scroll" id="traditionalSweetsGrid">
-        <!-- Traditional sweets products will be injected here -->
+      <h4 class="category-title">Packs & Balls (6 products)</h4>
+      <div class="horizontal-scroll" id="packsBallsGrid">
+        <!-- Packs & Balls products will be injected here -->
       </div>
     </div>
     
@@ -906,176 +924,118 @@
 // ----------------------
 const PRODUCTS = [
   // =============================================
-  // MINI BARS CATEGORY (50g-100g)
+  // MINI BARS CATEGORY (6 products)
   // =============================================
   {id:1, category:'miniBars', name:'Peanut Chikki Mini Bar', price:40, weight:'50g', 
-   // MINI BARS IMAGE LINK 1
    img:'assets/images/peanut_bar.jpg'},
   
   {id:2, category:'miniBars', name:'Sesame Chikki Mini Bar', price:35, weight:'50g', 
-   // MINI BARS IMAGE LINK 2
    img:'assets/images/peanut_jar.jpg'},
   
   {id:3, category:'miniBars', name:'Coconut Chikki Mini Bar', price:45, weight:'50g', 
-   // MINI BARS IMAGE LINK 3
    img:'assets/images/coconut-chikki-mini.jpg'},
   
   {id:4, category:'miniBars', name:'Mixed Nut Chikki Mini Bar', price:60, weight:'50g', 
-   // MINI BARS IMAGE LINK 4
    img:'assets/images/mixed-nut-chikki-mini.jpg'},
   
   {id:5, category:'miniBars', name:'Puffed Rice Chikki Mini Bar', price:30, weight:'50g', 
-   // MINI BARS IMAGE LINK 5
    img:'assets/images/puffed-rice-chikki-mini.jpg'},
   
   {id:6, category:'miniBars', name:'Groundnut Chikki Mini Bar', price:35, weight:'50g', 
-   // MINI BARS IMAGE LINK 6
    img:'assets/images/groundnut-chikki-mini.jpg'},
   
-  {id:7, category:'miniBars', name:'Jaggery Candy Mini Bar', price:25, weight:'50g', 
-   // MINI BARS IMAGE LINK 7
-   img:'assets/images/jaggery-candy-mini.jpg'},
+  // =============================================
+  // BARS CATEGORY (8 products)
+  // =============================================
+  {id:7, category:'bars', name:'Peanut Chikki Bar', price:80, weight:'100g', 
+   img:'assets/images/peanut_bar.jpg'},
   
-  {id:8, category:'miniBars', name:'Badam Chikki Mini Bar', price:70, weight:'50g', 
-   // MINI BARS IMAGE LINK 8
+  {id:8, category:'bars', name:'Sesame Chikki Bar', price:70, weight:'100g', 
+   img:'assets/images/peanut_jar.jpg'},
+  
+  {id:9, category:'bars', name:'Coconut Chikki Bar', price:90, weight:'100g', 
+   img:'assets/images/coconut-chikki-mini.jpg'},
+  
+  {id:10, category:'bars', name:'Mixed Nut Chikki Bar', price:120, weight:'100g', 
+   img:'assets/images/mixed-nut-chikki-mini.jpg'},
+  
+  {id:11, category:'bars', name:'Puffed Rice Chikki Bar', price:60, weight:'100g', 
+   img:'assets/images/puffed-rice-chikki-mini.jpg'},
+  
+  {id:12, category:'bars', name:'Groundnut Chikki Bar', price:70, weight:'100g', 
+   img:'assets/images/groundnut-chikki-mini.jpg'},
+  
+  {id:13, category:'bars', name:'Badam Chikki Bar', price:140, weight:'100g', 
    img:'assets/images/badam-chikki-mini.jpg'},
   
-  {id:9, category:'miniBars', name:'Cashew Chikki Mini Bar', price:80, weight:'50g', 
-   // MINI BARS IMAGE LINK 9
+  {id:14, category:'bars', name:'Cashew Chikki Bar', price:160, weight:'100g', 
    img:'assets/images/cashew-chikki-mini.jpg'},
   
-  {id:10, category:'miniBars', name:'Til Chikki Mini Bar', price:40, weight:'50g', 
-   // MINI BARS IMAGE LINK 10
-   img:'assets/images/til-chikki-mini.jpg'},
-  
   // =============================================
-  // JARS CATEGORY (500g-1kg)
+  // JARS CATEGORY (5 products)
   // =============================================
-  {id:11, category:'jars', name:'Peanut Chikki Jar', price:350, weight:'500g', 
-   // JARS IMAGE LINK 1
+  {id:15, category:'jars', name:'Peanut Chikki Jar', price:350, weight:'500g', 
    img:'assets/images/peanut-chikki-jar.jpg'},
   
-  {id:12, category:'jars', name:'Sesame Chikki Jar', price:320, weight:'500g', 
-   // JARS IMAGE LINK 2
+  {id:16, category:'jars', name:'Sesame Chikki Jar', price:320, weight:'500g', 
    img:'assets/images/sesame-chikki-jar.jpg'},
   
-  {id:13, category:'jars', name:'Coconut Chikki Jar', price:380, weight:'500g', 
-   // JARS IMAGE LINK 3
+  {id:17, category:'jars', name:'Coconut Chikki Jar', price:380, weight:'500g', 
    img:'assets/images/coconut-chikki-jar.jpg'},
   
-  {id:14, category:'jars', name:'Mixed Nut Chikki Jar', price:550, weight:'500g', 
-   // JARS IMAGE LINK 4
+  {id:18, category:'jars', name:'Mixed Nut Chikki Jar', price:550, weight:'500g', 
    img:'assets/images/mixed-nut-chikki-jar.jpg'},
   
-  {id:15, category:'jars', name:'Puffed Rice Chikki Jar', price:280, weight:'500g', 
-   // JARS IMAGE LINK 5
+  {id:19, category:'jars', name:'Puffed Rice Chikki Jar', price:280, weight:'500g', 
    img:'assets/images/puffed-rice-chikki-jar.jpg'},
   
-  {id:16, category:'jars', name:'Groundnut Chikki Jar', price:320, weight:'500g', 
-   // JARS IMAGE LINK 6
-   img:'assets/images/groundnut-chikki-jar.jpg'},
-  
-  {id:17, category:'jars', name:'Jaggery Candy Jar', price:250, weight:'500g', 
-   // JARS IMAGE LINK 7
-   img:'assets/images/jaggery-candy-jar.jpg'},
-  
-  {id:18, category:'jars', name:'Badam Chikki Jar', price:650, weight:'500g', 
-   // JARS IMAGE LINK 8
-   img:'assets/images/badam-chikki-jar.jpg'},
-  
-  {id:19, category:'jars', name:'Cashew Chikki Jar', price:720, weight:'500g', 
-   // JARS IMAGE LINK 9
-   img:'assets/images/cashew-chikki-jar.jpg'},
-  
-  {id:20, category:'jars', name:'Til Chikki Jar', price:350, weight:'500g', 
-   // JARS IMAGE LINK 10
-   img:'assets/images/til-chikki-jar.jpg'},
-  
   // =============================================
-  // COMBO PACKS CATEGORY
+  // BOXES CATEGORY (8 products)
   // =============================================
-  {id:21, category:'comboPacks', name:'Chikki Variety Combo', price:600, weight:'Assorted 750g', 
-   // COMBO PACKS IMAGE LINK 1
+  {id:20, category:'boxes', name:'Chikki Variety Box', price:600, weight:'Assorted 750g', 
    img:'assets/images/chikki-variety-combo.jpg'},
   
-  {id:22, category:'comboPacks', name:'Festival Special Combo', price:850, weight:'Assorted 1kg', 
-   // COMBO PACKS IMAGE LINK 2
+  {id:21, category:'boxes', name:'Festival Special Box', price:850, weight:'Assorted 1kg', 
    img:'assets/images/festival-special-combo.jpg'},
   
-  {id:23, category:'comboPacks', name:'Nut Lovers Combo', price:1200, weight:'Assorted 800g', 
-   // COMBO PACKS IMAGE LINK 3
+  {id:22, category:'boxes', name:'Nut Lovers Box', price:1200, weight:'Assorted 800g', 
    img:'assets/images/nut-lovers-combo.jpg'},
   
-  {id:24, category:'comboPacks', name:'Traditional Mittai Combo', price:750, weight:'Assorted 900g', 
-   // COMBO PACKS IMAGE LINK 4
+  {id:23, category:'boxes', name:'Traditional Mittai Box', price:750, weight:'Assorted 900g', 
    img:'assets/images/traditional-mittai-combo.jpg'},
   
-  {id:25, category:'comboPacks', name:'Family Pack Combo', price:950, weight:'Assorted 1.2kg', 
-   // COMBO PACKS IMAGE LINK 5
+  {id:24, category:'boxes', name:'Family Pack Box', price:950, weight:'Assorted 1.2kg', 
    img:'assets/images/family-pack-combo.jpg'},
   
-  {id:26, category:'comboPacks', name:'Gift Box Combo', price:1100, weight:'Assorted 1kg', 
-   // COMBO PACKS IMAGE LINK 6
+  {id:25, category:'boxes', name:'Gift Box', price:1100, weight:'Assorted 1kg', 
    img:'assets/images/gift-box-combo.jpg'},
   
-  {id:27, category:'comboPacks', name:'Mini Bars Combo', price:450, weight:'Assorted 500g', 
-   // COMBO PACKS IMAGE LINK 7
+  {id:26, category:'boxes', name:'Mini Bars Box', price:450, weight:'Assorted 500g', 
    img:'assets/images/mini-bars-combo.jpg'},
   
-  {id:28, category:'comboPacks', name:'Premium Combo', price:1500, weight:'Assorted 1kg', 
-   // COMBO PACKS IMAGE LINK 8
+  {id:27, category:'boxes', name:'Premium Box', price:1500, weight:'Assorted 1kg', 
    img:'assets/images/premium-combo.jpg'},
   
-  {id:29, category:'comboPacks', name:'Diwali Special Combo', price:1300, weight:'Assorted 1.5kg', 
-   // COMBO PACKS IMAGE LINK 9
-   img:'assets/images/diwali-special-combo.jpg'},
-  
-  {id:30, category:'comboPacks', name:'Pongal Special Combo', price:900, weight:'Assorted 1kg', 
-   // COMBO PACKS IMAGE LINK 10
-   img:'assets/images/pongal-special-combo.jpg'},
-  
   // =============================================
-  // TRADITIONAL SWEETS CATEGORY
+  // PACKS & BALLS CATEGORY (6 products)
   // =============================================
-  {id:31, category:'traditionalSweets', name:'Mysore Pak', price:400, weight:'500g', 
-   // TRADITIONAL SWEETS IMAGE LINK 1
+  {id:28, category:'packsBalls', name:'Mysore Pak Pack', price:400, weight:'500g', 
    img:'assets/images/mysore-pak.jpg'},
   
-  {id:32, category:'traditionalSweets', name:'Badusha', price:380, weight:'500g', 
-   // TRADITIONAL SWEETS IMAGE LINK 2
+  {id:29, category:'packsBalls', name:'Badusha Pack', price:380, weight:'500g', 
    img:'assets/images/badusha.jpg'},
   
-  {id:33, category:'traditionalSweets', name:'Jangiri', price:350, weight:'500g', 
-   // TRADITIONAL SWEETS IMAGE LINK 3
+  {id:30, category:'packsBalls', name:'Jangiri Pack', price:350, weight:'500g', 
    img:'assets/images/jangiri.jpg'},
   
-  {id:34, category:'traditionalSweets', name:'Laddu', price:320, weight:'500g', 
-   // TRADITIONAL SWEETS IMAGE LINK 4
+  {id:31, category:'packsBalls', name:'Laddu Pack', price:320, weight:'500g', 
    img:'assets/images/laddu.jpg'},
   
-  {id:35, category:'traditionalSweets', name:'Halwa', price:300, weight:'500g', 
-   // TRADITIONAL SWEETS IMAGE LINK 5
+  {id:32, category:'packsBalls', name:'Halwa Pack', price:300, weight:'500g', 
    img:'assets/images/halwa.jpg'},
   
-  {id:36, category:'traditionalSweets', name:'Adhirasam', price:280, weight:'500g', 
-   // TRADITIONAL SWEETS IMAGE LINK 6
-   img:'assets/images/adhirasam.jpg'},
-  
-  {id:37, category:'traditionalSweets', name:'Kaju Katli', price:600, weight:'500g', 
-   // TRADITIONAL SWEETS IMAGE LINK 7
-   img:'assets/images/kaju-katli.jpg'},
-  
-  {id:38, category:'traditionalSweets', name:'Palkova', price:450, weight:'500g', 
-   // TRADITIONAL SWEETS IMAGE LINK 8
-   img:'assets/images/palkova.jpg'},
-  
-  {id:39, category:'traditionalSweets', name:'Rava Kesari', price:250, weight:'500g', 
-   // TRADITIONAL SWEETS IMAGE LINK 9
-   img:'assets/images/rava-kesari.jpg'},
-  
-  {id:40, category:'traditionalSweets', name:'Milk Peda', price:380, weight:'500g', 
-   // TRADITIONAL SWEETS IMAGE LINK 10
-   img:'assets/images/milk-peda.jpg'}
+  {id:33, category:'packsBalls', name:'Adhirasam Pack', price:280, weight:'500g', 
+   img:'assets/images/adhirasam.jpg'}
 ];
 
 // ✅ Always start with an empty cart (no localStorage restore)
@@ -1206,9 +1166,10 @@ renderCartItems(); // ✅ Ensure empty cart UI loads correctly
 // ----------------------
 function renderProducts() {
   renderCategory('miniBars', 'miniBarsGrid');
+  renderCategory('bars', 'barsGrid');
   renderCategory('jars', 'jarsGrid');
-  renderCategory('comboPacks', 'comboPacksGrid');
-  renderCategory('traditionalSweets', 'traditionalSweetsGrid');
+  renderCategory('boxes', 'boxesGrid');
+  renderCategory('packsBalls', 'packsBallsGrid');
 }
 
 function renderCategory(category, containerId) {
@@ -1219,7 +1180,9 @@ function renderCategory(category, containerId) {
   
   categoryProducts.forEach(product => {
     const card = document.createElement('article');
-    card.className = 'card fade-up';
+    // Add jar-card class for jars category
+    const isJar = category === 'jars';
+    card.className = `card fade-up ${isJar ? 'jar-card' : ''}`;
     card.innerHTML = `
       <div class="product-media">
         <img src="${product.img}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover">
@@ -1426,7 +1389,3 @@ document.getElementById('waBtn').addEventListener('click', function(e) {
 </script>
 </body>
 </html>
-
-
-
-
