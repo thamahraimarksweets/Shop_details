@@ -45,7 +45,56 @@
   color:var(--accent);
   font-weight:600;
 }
-
+/* Mobile fixes for current structure */
+@media (max-width: 720px) {
+  .brand h1 {
+    font-size: 20px !important;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 3px rgba(200, 90, 26, 0.3);
+    animation: none !important;
+  }
+  
+  .brand h1::before,
+  .brand h1::after {
+    display: none !important;
+  }
+  
+  .brand p {
+    font-size: 13px !important;
+    font-weight: 600;
+    color: var(--accent) !important;
+    text-shadow: none !important;
+    background: none !important;
+    padding: 0 !important;
+    margin-top: 2px !important;
+    font-style: normal !important;
+  }
+  
+  /* Hide WhatsApp button in nav */
+  nav a.cta {
+    display: none !important;
+  }
+  
+  /* Adjust header for better spacing */
+  header {
+    padding: 12px 16px;
+  }
+  
+  .brand {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .logo {
+    width: 48px;
+    height: 48px;
+  }
+}
 /* Super attractive desktop version with animation */
 @media (min-width: 1000px) {
   .brand h1{
