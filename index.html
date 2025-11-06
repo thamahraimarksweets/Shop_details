@@ -79,10 +79,99 @@
     .horizontal-scroll::-webkit-scrollbar-thumb {background: var(--accent); border-radius: 3px;}
     .horizontal-scroll::-webkit-scrollbar-thumb:hover {background: var(--accent-2);}
     
-    .card{background:var(--card);border-radius:14px;padding:12px;box-shadow:0 6px 18px rgba(30,20,10,0.04);overflow:hidden;transition:transform 0.3s ease, box-shadow 0.3s ease; min-width: 220px; flex-shrink: 0;}
-    .card:hover{transform:translateY(-5px);box-shadow:0 12px 25px rgba(30,20,10,0.08)}
-    .product-media{height:160px;border-radius:10px;background:#f7f0ea;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .product-media img{width:100%;height:100%;object-fit:cover}
+/* ✅ Uniform Product Card Size — Desktop */
+/* ✅ Uniform Product Card Size — Desktop & Mobile */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 12px;
+  width: 220px;       /* desktop width */
+  height: 360px;      /* fixed height for consistency */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 2px dashed rgba(200, 90, 30, 0.25);
+  box-shadow: 0 6px 18px rgba(30,20,10,0.05);
+  flex-shrink: 0;
+}
+
+/* Fixed Image Container */
+.product-media {
+  height: 150px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f7eee4;
+}
+
+.product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Title (max 2 lines) */
+.card h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 6px 0 2px;
+  line-height: 1.2;
+  height: 36px; /* fits 2 lines */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Description (max 3 lines) */
+.p-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.25;
+  height: 48px; /* fits 3 lines */
+  overflow: hidden;
+  margin: 4px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/* Meta & price alignment */
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 4px;
+}
+
+/* Add-to-cart button placement */
+.btn {
+  width: 100%;
+  margin-top: auto;
+  font-size: 13px;
+}
+
+/* ✅ Mobile Responsive Fix */
+@media (max-width: 720px) {
+  .card {
+    width: 60vw; /* increased from 42vw to make cards wider */
+    height: 400px; /* keep height same */
+  }
+
+  .product-media {
+    height: 120px;
+  }
+
+  .card h4 {
+    font-size: 14px;
+  }
+
+  .p-desc {
+    font-size: 11px;
+    -webkit-line-clamp: 2;
+  }
+}
+
     .meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
     .price{font-weight:700;color:var(--accent)}
     .weight{font-size: 12px; color: var(--muted); margin-top: 4px;}
@@ -450,8 +539,8 @@ const PRODUCTS = [
   {id:40, category:'traditionalSweets', name:'Milk Peda', price:380, weight:'500g', img:'assets/images/milk-peda.jpg', desc:'Soft milk peda with cardamom flavor.'}
 ];
 
-// Cart state
-let cart = JSON.parse(localStorage.getItem('thamahraiCart')) || [];
+// ✅ Always start with an empty cart (no localStorage restore)
+let cart = [];
 
 // DOM elements
 const cartIcon = document.getElementById('cartIcon');
@@ -477,7 +566,6 @@ function openCart() {
   cartOverlay.classList.add('active');
   cartOpen = true;
   
-  // Add history state when opening cart
   if (!historyStateAdded) {
     history.pushState({ cartOpen: true }, '', window.location.href);
     historyStateAdded = true;
@@ -491,19 +579,17 @@ function closeCartSidebar() {
   historyStateAdded = false;
 }
 
-// Handle browser back button
 window.addEventListener('popstate', function(event) {
   if (cartOpen) {
     closeCartSidebar();
-    
-    // Prevent default back navigation
     history.pushState({ cartOpen: false }, '', window.location.href);
   }
 });
 
-// Initialize
+// Initialize UI fresh state
 updateCartCount();
 renderProducts();
+renderCartItems(); // ✅ Ensure empty cart UI loads correctly
 
 // ----------------------
 // Product rendering
@@ -593,17 +679,12 @@ function addToCart(productId) {
 function removeFromCart(productId) {
   cart = cart.filter(item => item.id !== productId);
   updateCart();
-  renderProducts(); // Update product quantities
+  renderProducts();
 }
 
 function updateCart() {
-  // Save to localStorage
-  localStorage.setItem('thamahraiCart', JSON.stringify(cart));
-  
-  // Update cart count
+  // ✅ Removed localStorage save
   updateCartCount();
-  
-  // Render cart items
   renderCartItems();
 }
 
@@ -695,11 +776,8 @@ function sendWhatsAppOrder() {
 // Event listeners
 // ----------------------
 cartIcon.addEventListener('click', openCart);
-
 closeCart.addEventListener('click', closeCartSidebar);
-
 cartOverlay.addEventListener('click', closeCartSidebar);
-
 checkoutWhatsApp.addEventListener('click', sendWhatsAppOrder);
 clearCartBtn.addEventListener('click', clearCart);
 
