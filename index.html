@@ -39,35 +39,47 @@
     .cart-icon{position:relative;cursor:pointer;padding:8px 12px;border-radius:10px;background:rgba(200,90,30,0.1);color:var(--accent)}
     .cart-count{position:absolute;top:-8px;right:-8px;background:var(--accent);color:white;border-radius:50%;width:20px;height:20px;font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:700}
 
-    /* Hero */
+    /* NEW HERO SECTION STYLES */
     .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;padding:24px;align-items:center}
-    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.85));padding:28px;border-radius:20px;box-shadow:0 10px 30px rgba(50,30,20,0.06)}
-    .kicker{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
-    .hero h2{margin:12px 0 8px;font-size:28px;font-weight:700}
-    .hero p.lead{color:var(--muted);margin:0 0 16px}
-    .hero .badges{display:flex;gap:8px;flex-wrap:wrap}
-    .badge{background:#fff;padding:8px 12px;border-radius:10px;border:1px solid rgba(200,90,30,0.08);font-weight:600}
-
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.85));padding:28px;border-radius:20px;box-shadow:0 10px 30px rgba(50,30,20,0.06);position:relative;overflow:hidden}
+    .hero-card::before{content:'';position:absolute;top:0;left:0;width:6px;height:100%;background:linear-gradient(to bottom,var(--accent),var(--accent-2))}
+    
+    .kicker{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px;margin-bottom:12px}
+    
+    .hero h2{margin:12px 0 8px;font-size:28px;font-weight:700;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    
+    .hero p.lead{color:var(--muted);margin:0 0 16px;font-size:16px;line-height:1.6}
+    
+    /* NEW HIGHLIGHT POINTS STYLES */
+    .highlight-points{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:20px 0}
+    .highlight-point{display:flex;align-items:center;gap:10px;padding:12px;background:rgba(255,255,255,0.7);border-radius:12px;border-left:4px solid var(--accent);box-shadow:0 4px 12px rgba(0,0,0,0.05)}
+    .highlight-point .icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:14px;flex-shrink:0}
+    .highlight-point .text{font-size:14px;font-weight:600}
+    .highlight-point .text small{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:2px}
+    
+    .hero .badges{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+    .badge{background:#fff;padding:8px 12px;border-radius:10px;border:1px solid rgba(200,90,30,0.08);font-weight:600;display:flex;align-items:center;gap:6px}
+    .badge::before{content:'✓';color:var(--accent);font-weight:bold}
+    
     .hero-media{display:flex;flex-direction:column;gap:12px}
     .hero-media .cover{height:220px;border-radius:16px;background:linear-gradient(135deg,#ffe6cc,#fff);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
     .cover img{width:100%;height:100%;object-fit:cover;display:block}
     .small-cards{display:flex;gap:10px}
-    .small{flex:1;background:var(--card);padding:10px;border-radius:12px;text-align:center}
-
+    .small{flex:1;background:var(--card);padding:10px;border-radius:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.05)}
+    
     /* Products */
     .section{padding:24px}
     .section h3{margin:0 0 12px}
     
     /* Category Section */
-    /* Category Section UI Improvement */
-.category-section {
-  margin-bottom: 40px;
-  background: #fff;
-  border: 2px solid rgba(200, 90, 30, 0.15);
-  border-radius: 14px;
-  padding: 14px;
-  box-shadow: 0 6px 14px rgba(30, 20, 10, 0.03);
-}
+    .category-section {
+      margin-bottom: 40px;
+      background: #fff;
+      border: 2px solid rgba(200, 90, 30, 0.15);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 6px 14px rgba(30, 20, 10, 0.03);
+    }
 
     .category-title {font-size: 22px; margin-bottom: 16px; color: var(--accent); display: flex; align-items: center; gap: 8px;}
     .category-title:before {content: ''; display: block; width: 4px; height: 22px; background: var(--accent-2); border-radius: 2px;}
@@ -79,81 +91,46 @@
     .horizontal-scroll::-webkit-scrollbar-thumb {background: var(--accent); border-radius: 3px;}
     .horizontal-scroll::-webkit-scrollbar-thumb:hover {background: var(--accent-2);}
     
-/* ✅ Updated Product Card Size — Vertical Rectangle */
-.card {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 12px;
-  width: 200px;       /* slightly narrower for vertical look */
-  height: 400px;      /* reduced height since we removed description */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border: 2px dashed rgba(200, 90, 30, 0.25);
-  box-shadow: 0 6px 18px rgba(30,20,10,0.05);
-  flex-shrink: 0;
-}
+    /* Product Card */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 12px;
+      width: 200px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 2px dashed rgba(200, 90, 30, 0.25);
+      box-shadow: 0 6px 18px rgba(30,20,10,0.05);
+      flex-shrink: 0;
+    }
 
-/* Updated Image Container - Vertical Rectangle */
-.product-media {
-  height: 200px;      /* taller for vertical rectangle */
-  width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #f7eee4;
-}
+    .product-media {
+      height: 200px;
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f7eee4;
+    }
 
-.product-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .product-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-/* Title (max 2 lines) */
-.card h4 {
-  font-size: 15px;
-  font-weight: 700;
-  margin: 8px 0 4px;
-  line-height: 1.2;
-  height: 36px; /* fits 2 lines */
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-/* Removed description styles */
-
-/* Meta & price alignment */
-.meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 8px 0;
-}
-
-/* Add-to-cart button placement */
-.btn {
-  width: 100%;
-  margin-top: auto;
-  font-size: 13px;
-}
-
-/* ✅ Mobile Responsive Fix */
-@media (max-width: 720px) {
-  .card {
-    width: 55vw; /* slightly wider on mobile */
-    height: 380px; /* keep height same */
-  }
-
-  .product-media {
-    height: 160px;
-  }
-
-  .card h4 {
-    font-size: 14px;
-  }
-}
+    .card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 8px 0 4px;
+      line-height: 1.2;
+      height: 36px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
 
     .meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
     .price{font-weight:700;color:var(--accent)}
@@ -224,6 +201,7 @@
       nav a:not(.cta){display:none}
       .cart-sidebar{width:100%;right:-100%}
       .category-title {font-size: 18px;}
+      .highlight-points{grid-template-columns:1fr}
     }
 
     /* simple animation */
@@ -237,9 +215,9 @@
 <header>
   <div class="brand">
     <div class="logo" aria-hidden>
-  <!-- LOGO IMAGE LINK -->
-  <img src="assets/images/logo.jpg" alt="Thamahrai Mark Sweets" style="width:100%;height:100%;border-radius:12px;object-fit:cover">
-</div>
+      <!-- LOGO IMAGE LINK -->
+      <img src="assets/images/logo.jpg" alt="Thamahrai Mark Sweets" style="width:100%;height:100%;border-radius:12px;object-fit:cover">
+    </div>
     <div>
       <h1>Thamahrai Mark Sweets</h1>
       <p>Traditional Tamil sweets • Made with jaggery</p>
@@ -256,15 +234,37 @@
 </header>
 
 <main>
+  <!-- UPDATED HERO SECTION -->
   <section class="hero section">
     <div class="hero-card fade-up" id="heroCard">
-      <span class="kicker">Handmade • Fresh Batches</span>
-      <h2>Village taste in every bite — Crispy Peanut Chikki & More</h2>
-      <p class="lead">Small-batch sweets from traditional recipes. No preservatives — just jaggery, love and crunch.</p>
+      <span class="kicker">Why Thamahrai Mark?</span>
+      <h2>Authentic Tamil Sweets Since 1968</h2>
+      <p class="lead">Three generations of traditional sweet-making expertise, bringing you the authentic taste of Tamil Nadu with every bite.</p>
+      
+      <!-- NEW HIGHLIGHT POINTS -->
+      <div class="highlight-points">
+        <div class="highlight-point">
+          <div class="icon">55+</div>
+          <div class="text">Years of Tradition <small>Family recipes since 1968</small></div>
+        </div>
+        <div class="highlight-point">
+          <div class="icon">🚚</div>
+          <div class="text">Free Local Delivery <small>Across Madurai city</small></div>
+        </div>
+        <div class="highlight-point">
+          <div class="icon">🎯</div>
+          <div class="text">Event Customization <small>For weddings & festivals</small></div>
+        </div>
+        <div class="highlight-point">
+          <div class="icon">🌱</div>
+          <div class="text">Pure Ingredients <small>No preservatives added</small></div>
+        </div>
+      </div>
+      
       <div class="badges">
-        <span class="badge">Free sample on orders ₹500+</span>
-        <span class="badge">Pongal special</span>
-        <span class="badge">Pickup & Local Delivery</span>
+        <span class="badge">Handmade with traditional recipes</span>
+        <span class="badge">Fresh daily batches</span>
+        <span class="badge">100% natural jaggery sweets</span>
       </div>
 
       <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
@@ -273,27 +273,27 @@
       </div>
 
       <div style="margin-top:18px;font-size:13px;color:var(--muted)">Batch info: <strong id="batchInfo">Made on 03-Nov-2025 • Batch #042</strong></div>
-
     </div>
 
     <aside class="hero-media">
       <div class="cover fade-up" id="heroMedia" role="img" aria-label="Peanut chikki">
-  <!-- HERO IMAGE LINK -->
-  <img src="assets/images/group.jpg" alt="Peanut chikki hero image">
-</div>
+        <!-- HERO IMAGE LINK -->
+        <img src="assets/images/group.jpg" alt="Peanut chikki hero image">
+      </div>
       <div class="small-cards">
         <div class="small">
           <strong>Pickup in 30 mins</strong>
           <div style="font-size:12px;color:var(--muted)">Call or WhatsApp</div>
         </div>
         <div class="small">
-          <strong>Handmade</strong>
-          <div style="font-size:12px;color:var(--muted)">Small daily batches</div>
+          <strong>Free Delivery</strong>
+          <div style="font-size:12px;color:var(--muted)">Across Madurai</div>
         </div>
       </div>
     </aside>
   </section>
 
+  <!-- REST OF THE CODE REMAINS THE SAME -->
   <section id="products" class="section">
     <h3>Our Sweets Collection</h3>
     
@@ -924,5 +924,3 @@ document.getElementById('waBtn').addEventListener('click', function(e) {
 </script>
 </body>
 </html>
-
-
