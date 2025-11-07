@@ -253,6 +253,28 @@
     
     .hero-media{display:flex;flex-direction:column;gap:12px}
     
+    /* Change highlight points to pink */
+.highlight-points .icon {
+  background: linear-gradient(135deg, #ff6b9d, #f55188) !important;
+}
+
+.highlight-point {
+  border-left: 4px solid #f55188 !important;
+}
+/* Change Bars (2nd category) and Boxes (4th category) sparkle to pink */
+.category-section:nth-child(2) .category-title::before,
+.category-section:nth-child(4) .category-title::before {
+  color: var(--accent) !important;
+}
+
+/* Keep other categories (1st, 3rd, 5th) sparkle orange */
+.category-section:nth-child(1) .category-title::before,
+.category-section:nth-child(3) .category-title::before,
+.category-section:nth-child(5) .category-title::before {
+  color: #f55188 !important;
+}
+
+
     /* Hero Slideshow Styles */
     .hero-slideshow {
       position: relative;
@@ -850,7 +872,7 @@
     
     <!-- Mini Bars Category -->
     <div class="category-section">
-      <h4 class="category-title">Mini Bars (6 products)</h4>
+      <h4 class="category-title">Mini Bars </h4>
       <div class="horizontal-scroll" id="miniBarsGrid">
         <!-- Mini bars products will be injected here -->
       </div>
@@ -858,7 +880,7 @@
     
     <!-- Bars Category -->
     <div class="category-section">
-      <h4 class="category-title">Bars (8 products)</h4>
+      <h4 class="category-title">Bars </h4>
       <div class="horizontal-scroll" id="barsGrid">
         <!-- Bars products will be injected here -->
       </div>
@@ -866,7 +888,7 @@
     
     <!-- Jars Category -->
     <div class="category-section">
-      <h4 class="category-title">Jars (5 products)</h4>
+      <h4 class="category-title">Jars </h4>
       <div class="horizontal-scroll" id="jarsGrid">
         <!-- Jars products will be injected here -->
       </div>
@@ -874,7 +896,7 @@
     
     <!-- Boxes Category -->
     <div class="category-section">
-      <h4 class="category-title">Boxes (8 products)</h4>
+      <h4 class="category-title">Boxes </h4>
       <div class="horizontal-scroll" id="boxesGrid">
         <!-- Boxes products will be injected here -->
       </div>
@@ -882,7 +904,7 @@
     
     <!-- Packs & Balls Category -->
     <div class="category-section">
-      <h4 class="category-title">Packs & Balls (6 products)</h4>
+      <h4 class="category-title">Packs & Balls </h4>
       <div class="horizontal-scroll" id="packsBallsGrid">
         <!-- Packs & Balls products will be injected here -->
       </div>
@@ -1035,15 +1057,6 @@ const PRODUCTS = [
   
   {id:3, category:'miniBars', name:'Coconut Chikki Mini Bar', price:45, weight:'50g', 
    img:'assets/images/coconut-chikki-mini.jpg'},
-  
-  {id:4, category:'miniBars', name:'Mixed Nut Chikki Mini Bar', price:60, weight:'50g', 
-   img:'assets/images/mixed-nut-chikki-mini.jpg'},
-  
-  {id:5, category:'miniBars', name:'Puffed Rice Chikki Mini Bar', price:30, weight:'50g', 
-   img:'assets/images/puffed-rice-chikki-mini.jpg'},
-  
-  {id:6, category:'miniBars', name:'Groundnut Chikki Mini Bar', price:35, weight:'50g', 
-   img:'assets/images/groundnut-chikki-mini.jpg'},
   
   // =============================================
   // BARS CATEGORY (8 products)
@@ -1490,4 +1503,7 @@ document.getElementById('waBtn').addEventListener('click', function(e) {
 </script>
 </body>
 </html>
+
+
+
 
