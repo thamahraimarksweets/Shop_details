@@ -379,6 +379,147 @@
       right: 15px;
     }
 
+    /* OUR VARIETIES SECTION STYLES */
+    #varieties {
+      padding: 60px 24px;
+      background: linear-gradient(180deg, rgba(255,248,240,0.8), rgba(255,255,255,1));
+    }
+
+    .varieties-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .varieties-title {
+      text-align: center;
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 50px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .varieties-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 25px;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .variety-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .variety-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+      background: #fff;
+      box-shadow: 
+        0 8px 25px rgba(50, 30, 20, 0.12),
+        0 0 0 2px rgba(255, 255, 255, 0.8),
+        0 0 0 4px rgba(200, 90, 30, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .variety-circle::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, transparent, rgba(255,255,255,0.4));
+      z-index: 2;
+    }
+
+    .variety-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .variety-circle:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 
+        0 15px 35px rgba(50, 30, 20, 0.18),
+        0 0 0 2px rgba(255, 255, 255, 0.9),
+        0 0 0 4px rgba(200, 90, 30, 0.2);
+    }
+
+    .variety-circle:hover img {
+      transform: scale(1.1);
+    }
+
+    .variety-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2b2b2b;
+      text-align: center;
+      margin: 0;
+      text-transform: capitalize;
+      letter-spacing: 0.3px;
+      font-family: 'Mukta', sans-serif;
+    }
+
+    /* Mobile Responsive for Varieties */
+    @media (max-width: 768px) {
+      #varieties {
+        padding: 40px 16px;
+      }
+      
+      .varieties-title {
+        font-size: 28px;
+        margin-bottom: 30px;
+      }
+      
+      .varieties-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        row-gap: 30px;
+      }
+      
+      .variety-circle {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .variety-name {
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .varieties-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        row-gap: 25px;
+      }
+      
+      .variety-circle {
+        width: 70px;
+        height: 70px;
+      }
+      
+      .variety-name {
+        font-size: 12px;
+      }
+    }
+
     /* Products */
     .section{padding:24px}
     .section h3{margin:0 0 12px}
@@ -784,8 +925,6 @@
     </div>
   </div>
   <nav>
-    <a href="#products">Products</a>
-    <a href="#about">About</a>
     <a href="#contact" class="cta">Order via WhatsApp</a>
     <div class="cart-icon" id="cartIcon">
       🛒 Cart <span class="cart-count" id="cartCount">0</span>
@@ -826,11 +965,6 @@
         <span class="badge">Fresh daily batches</span>
         <span class="badge">100% natural jaggery sweets</span>
       </div>
-
-      <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
-        <a class="btn" href="#products" aria-label="View products">Explore Sweets</a>
-        <a class="btn btn-outline" href="#about">Our Story</a>
-      </div>
     </div>
 
     <aside class="hero-media">
@@ -864,6 +998,16 @@
         </div>
       </div>
     </aside>
+  </section>
+
+  <!-- OUR VARIETIES SECTION -->
+  <section id="varieties" class="section">
+    <div class="varieties-container">
+      <h3 class="varieties-title">Our Varieties</h3>
+      <div class="varieties-grid">
+        <!-- Variety circles will be injected here by JavaScript -->
+      </div>
+    </div>
   </section>
 
   <!-- UPDATED PRODUCTS SECTION WITH 5 CATEGORIES -->
@@ -1152,6 +1296,44 @@ const PRODUCTS = [
    img:'assets/images/balls_jagnut.jpg'}
 ];
 
+// ----------------------
+// Our Varieties Data
+// ----------------------
+const VARIETIES = [
+  { id: 1, name: "Peanut", img: "assets/images/variety_peanut.jpg" },
+  { id: 2, name: "Sesame", img: "assets/images/variety_sesame.jpg" },
+  { id: 3, name: "Coconut", img: "assets/images/variety_coconut.jpg" },
+  { id: 4, name: "Cashew", img: "assets/images/variety_cashew.jpg" },
+  { id: 5, name: "Jaggery", img: "assets/images/variety_jaggery.jpg" },
+  { id: 6, name: "Friedgram", img: "assets/images/variety_friedgram.jpg" },
+  { id: 7, name: "Palm", img: "assets/images/variety_palm.jpg" },
+  { id: 8, name: "Nuts", img: "assets/images/variety_nuts.jpg" }
+];
+
+// ----------------------
+// Render Varieties
+// ----------------------
+function renderVarieties() {
+  const varietiesGrid = document.querySelector('.varieties-grid');
+  if (!varietiesGrid) return;
+  
+  varietiesGrid.innerHTML = '';
+  
+  VARIETIES.forEach(variety => {
+    const varietyItem = document.createElement('div');
+    varietyItem.className = 'variety-item fade-up';
+    
+    varietyItem.innerHTML = `
+      <div class="variety-circle">
+        <img src="${variety.img}" alt="${variety.name}" loading="lazy">
+      </div>
+      <div class="variety-name">${variety.name}</div>
+    `;
+    
+    varietiesGrid.appendChild(varietyItem);
+  });
+}
+
 // ✅ Always start with an empty cart (no localStorage restore)
 let cart = [];
 
@@ -1273,6 +1455,7 @@ window.addEventListener('popstate', function(event) {
 // Initialize UI fresh state
 updateCartCount();
 renderProducts();
+renderVarieties(); // ✅ Add this line
 renderCartItems(); // ✅ Ensure empty cart UI loads correctly
 
 // ----------------------
@@ -1503,10 +1686,3 @@ document.getElementById('waBtn').addEventListener('click', function(e) {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
