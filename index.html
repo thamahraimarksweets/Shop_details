@@ -527,6 +527,57 @@
         font-size: 12px;
       }
     }
+    /* Scrolling Announcement Banner */
+.announcement-banner {
+  background: linear-gradient(90deg, #ff0000, #ff4444, #ff0000);
+  color: white;
+  padding: 12px 0;
+  overflow: hidden;
+  position: relative;
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(255, 0, 0, 0.3);
+  border-bottom: 2px solid #cc0000;
+}
+
+.scrolling-text {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scrollBanner 20s linear infinite;
+  padding: 0 20px;
+}
+
+.scrolling-text span {
+  margin: 0 30px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes scrollBanner {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Pause animation on hover */
+.announcement-banner:hover .scrolling-text {
+  animation-play-state: paused;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .announcement-banner {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+  
+  .scrolling-text span {
+    margin: 0 15px;
+  }
+}
 
     /* Products */
     .section{padding:24px}
@@ -681,6 +732,26 @@
       -webkit-box-orient: vertical;
       color: #2b2b2b;
     }
+
+    /* Update toast styles for longer messages */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  z-index: 1001;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  max-width: 90%;
+  text-align: center;
+  word-wrap: break-word;
+}
 
     .meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
     .price{font-weight:700;color:var(--accent); font-size: 18px;}
@@ -939,6 +1010,19 @@
     </div>
   </nav>
 </header>
+</header>
+
+<!-- ADD THIS SCROLLING BANNER -->
+<div class="announcement-banner">
+  <div class="scrolling-text">
+    <span>🚚 The minimum order is ₹99 • Shipping charges ₹50 for cities delivery other than Madurai 🚚</span>
+    <span>🚚 The minimum order is ₹99 • Shipping charges ₹50 for cities delivery other than Madurai 🚚</span>
+    <span>🚚 The minimum order is ₹99 • Shipping charges ₹50 for cities delivery other than Madurai 🚚</span>
+  </div>
+</div>
+
+<main>
+  <!-- UPDATED HERO SECTION -->
 
 <main>
   <!-- UPDATED HERO SECTION -->
@@ -1692,8 +1776,116 @@ document.getElementById('waBtn').addEventListener('click', function(e) {
   const url = `https://wa.me/${PHONE.replace(/\D/g,'')}?text=${msg}`;
   window.open(url, '_blank');
 });
+
+// Add this function for minimum order validation
+function validateMinimumOrder() {
+  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  return total >= 99;
+}
+
+function getCartTotal() {
+  return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+}
+
+// Update the addToCart function to show validation message
+function addToCart(productId) {
+  increaseQuantity(productId);
+  
+  const total = getCartTotal();
+  if (total < 99) {
+    showToast(`Added to cart! Add ₹${99 - total} more to meet minimum order of ₹99`);
+  } else {
+    showToast('Item added to cart!');
+  }
+}
+
+// Update the WhatsApp ordering function to validate minimum order
+function sendWhatsAppOrder() {
+  if (cart.length === 0) {
+    showToast('Add items to cart first!');
+    return;
+  }
+  
+  // Check minimum order amount
+  if (!validateMinimumOrder()) {
+    const total = getCartTotal();
+    const remaining = 99 - total;
+    showToast(`Minimum order is ₹99. Please add ₹${remaining} more items.`);
+    return;
+  }
+  
+  const PHONE = '+917598768899'
+  let message = "Hi, I'd like to order from Thamahrai Mark Sweets:\n\n";
+  let total = 0;
+  
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    message += `• ${item.quantity} x ${item.name} (${item.weight}) - ₹${itemTotal}\n`;
+    total += itemTotal;
+  });
+  
+  // Add shipping information
+  message += `\nTotal: ₹${total}`;
+  message += `\n\nMy Delivery Address: `;
+  
+  const url = `https://wa.me/${PHONE.replace(/\D/g,'')}?text=${encodeURIComponent(message)}`;
+  window.open(url, '_blank');
+}
+
+// Update the checkout button in cart to show validation
+checkoutWhatsApp.addEventListener('click', sendWhatsAppOrder);
+
+// Also update the cart rendering to show minimum order message
+function renderCartItems() {
+  if (cart.length === 0) {
+    cartItems.innerHTML = '<div class="empty-cart">Your cart is empty<br><small>Add some delicious sweets!</small></div>';
+    cartTotalAmount.textContent = '₹ 0';
+    return;
+  }
+  
+  let itemsHTML = '';
+  let total = 0;
+  
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    
+    itemsHTML += `
+      <div class="cart-item">
+        <div class="cart-item-img">
+          <img src="${item.img}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;border-radius:8px">
+        </div>
+        <div class="cart-item-details">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">₹ ${item.price} × ${item.quantity} = ₹ ${itemTotal}</div>
+          <div class="cart-item-controls">
+            <button class="qty-btn" onclick="decreaseQuantity(${item.id})">-</button>
+            <span class="qty-display">${item.quantity}</span>
+            <button class="qty-btn" onclick="increaseQuantity(${item.id})">+</button>
+            <button class="remove-item" onclick="removeFromCart(${item.id})">Remove</button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  
+  // Add minimum order message if applicable
+  if (total < 99) {
+    const remaining = 99 - total;
+    itemsHTML += `
+      <div style="background: #fff3f3; border: 1px solid #ffcdd2; border-radius: 8px; padding: 12px; margin-top: 10px; text-align: center;">
+        <strong style="color: #d32f2f;">Minimum order: ₹99</strong>
+        <p style="margin: 5px 0 0; color: #d32f2f; font-size: 14px;">
+          Add ₹${remaining} more to proceed with order
+        </p>
+      </div>
+    `;
+  }
+  
+  cartItems.innerHTML = itemsHTML;
+  cartTotalAmount.textContent = `₹ ${total}`;
+}
 </script>
 </body>
 </html>
-
 
