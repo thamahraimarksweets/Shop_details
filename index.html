@@ -1236,14 +1236,17 @@ async function submitPaymentDetails() {
     // Step 2: Upload image to ImageBB
     updateProgress(40, 'Uploading screenshot to cloud...');
     
-    let imageUrl = '';
-    try {
-      imageUrl = await uploadImageToImageBB(processedFile);
-      updateProgress(70, 'Screenshot uploaded successfully!');
-    } catch (uploadError) {
-      console.warn('ImageBB upload failed:', uploadError);
-      throw new Error('Screenshot upload failed');
-    }
+let imageUrl = "";
+try {
+    imageUrl = await uploadImageToImageBB(processedFile);
+} catch (uploadError) {
+    console.error("Image upload failed:", uploadError);
+
+    // Fallback so mail will still be sent
+    imageUrl = "SCREENSHOT_UPLOAD_FAILED";
+
+    // Do NOT throw → otherwise email will never be sent
+}
 
     // Step 3: Prepare form data
     updateProgress(80, 'Submitting payment details...');
@@ -1261,8 +1264,20 @@ async function submitPaymentDetails() {
     formData.append('order_details', getOrderDetailsText());
     
     // Image URL from ImageBB
-    formData.append('payment_screenshot_url', imageUrl);
-    formData.append('image_view_link', `🔗 View Screenshot: ${imageUrl}`);
+formData.append(
+    'payment_screenshot_url',
+    imageUrl === "SCREENSHOT_UPLOAD_FAILED" 
+        ? "Screenshot could not be uploaded"
+        : imageUrl
+);
+
+formData.append(
+    "image_view_link",
+    imageUrl === "SCREENSHOT_UPLOAD_FAILED"
+        ? "Screenshot upload failed. Customer will send on WhatsApp if needed."
+        : imageUrl
+);
+
 
     // Step 4: Submit to FormSubmit
     updateProgress(90, 'Finalizing...');
