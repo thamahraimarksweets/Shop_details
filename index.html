@@ -1069,10 +1069,11 @@ const VARIETIES = [
 // ----------------------
 const COMPANY_UPI_ID = "swetha33033@okhdfcbank";
 const WHATSAPP_NUMBER = "917598768899"; // Your WhatsApp number
+
 // ----------------------
-// Image Upload Configuration  
+// Google Apps Script Configuration  
 // ----------------------
-const IMAGEBB_API_KEY = '14c6da0e311178eb321eff414e2c8d14';
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRUTT6KqysIbOLoP-PlZiTXwGRJklPBc5BNVShjHo0GCINL17b-BH8ywoieO0VzBcK/exec"; // Replace with your actual script URL
 
 // ----------------------
 // Render Varieties
@@ -1192,7 +1193,7 @@ function validateFile(file) {
 }
 
 // ----------------------
-// NEW: Enhanced Form Submission with Email Status Tracking
+// NEW: Enhanced Form Submission with Google Apps Script
 // ----------------------
 async function submitPaymentDetails() {
   // Validate form first
@@ -1219,58 +1220,46 @@ async function submitPaymentDetails() {
   let emailError = null;
 
   try {
-    // Step 1: Upload image to ImageBB
-    updateProgress(30, 'Uploading screenshot to cloud...');
+    // Step 1: Convert image to base64
+    updateProgress(30, 'Processing screenshot...');
     
-    let imageUrl = "";
+    let imageBase64 = "";
     try {
-      imageUrl = await uploadImageToImageBB(file);
+      imageBase64 = await convertImageToBase64(file);
     } catch (uploadError) {
-      console.error("Image upload failed:", uploadError);
-      imageUrl = "SCREENSHOT_UPLOAD_FAILED";
+      console.error("Image processing failed:", uploadError);
+      imageBase64 = "";
     }
 
-    // Step 2: Prepare form data
+    // Step 2: Prepare data for Google Apps Script
     updateProgress(60, 'Submitting payment details...');
     
-    const formData = new FormData();
-    formData.append('_subject', `💰 UPI Payment - ${name} - ₹${getCartTotal()}`);
-    formData.append('_template', 'table');
-    formData.append('_captcha', 'false');
-    formData.append('_cc', 'thamahraimarksweets@gmail.com');
+    const orderDetails = getOrderDetailsText();
+    const totalAmount = getCartTotal();
     
-    // Customer details
-    formData.append('customer_name', name);
-    formData.append('transaction_id', txnId);
-    formData.append('order_total', `₹${getCartTotal()}`);
-    formData.append('order_details', getOrderDetailsText());
-    
-    // Image URL from ImageBB
-    formData.append(
-      'payment_screenshot_url',
-      imageUrl === "SCREENSHOT_UPLOAD_FAILED" 
-          ? "Screenshot could not be uploaded"
-          : imageUrl
-    );
+    const payload = {
+      name: name,
+      phone: "Not provided", // You can add a phone field if needed
+      transactionId: txnId,
+      amount: totalAmount,
+      order: orderDetails,
+      imageBase64: imageBase64
+    };
 
-    formData.append(
-      "image_view_link",
-      imageUrl === "SCREENSHOT_UPLOAD_FAILED"
-          ? "Screenshot upload failed. Customer will send on WhatsApp if needed."
-          : imageUrl
-    );
-
-    // Step 3: Submit to FormSubmit with timeout
+    // Step 3: Submit to Google Apps Script with timeout
     updateProgress(80, 'Sending email confirmation...');
     
-    const submissionPromise = fetch('https://formsubmit.co/ajax/thamahraimarksweets@gmail.com', {
+    const submissionPromise = fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
-      body: formData
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
     });
     
-    // Set a timeout for the email submission
+    // Set a timeout for the submission
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Email submission timeout')), 15000)
+      setTimeout(() => reject(new Error('Submission timeout')), 15000)
     );
     
     const result = await Promise.race([submissionPromise, timeoutPromise]);
@@ -1280,7 +1269,12 @@ async function submitPaymentDetails() {
     }
     
     const resultData = await result.json();
-    emailDelivered = true;
+    
+    if (resultData.success) {
+      emailDelivered = true;
+    } else {
+      throw new Error(resultData.error || 'Submission failed');
+    }
 
     // Step 4: Success
     updateProgress(100, 'Success! Opening WhatsApp...');
@@ -1290,7 +1284,7 @@ async function submitPaymentDetails() {
     
     // Step 5: Open WhatsApp with email status
     setTimeout(() => {
-      openWhatsAppWithEmailStatus(name, txnId, imageUrl, emailDelivered, emailError);
+      openWhatsAppWithEmailStatus(name, txnId, emailDelivered, emailError);
     }, 1000);
 
     // Step 6: Clean up
@@ -1316,12 +1310,24 @@ async function submitPaymentDetails() {
     
     // Fallback: Open WhatsApp with error message
     setTimeout(() => {
-      openWhatsAppWithEmailStatus(name, txnId, "", emailDelivered, emailError);
+      openWhatsAppWithEmailStatus(name, txnId, emailDelivered, emailError);
     }, 1500);
     
     submitPayment.textContent = 'Submit Payment & Open WhatsApp';
     submitPayment.disabled = false;
   }
+}
+
+// ----------------------
+// NEW: Convert Image to Base64
+// ----------------------
+function convertImageToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+    reader.readAsDataURL(file);
+  });
 }
 
 // ----------------------
@@ -1356,7 +1362,7 @@ function showEmailStatus(type, message) {
 // ----------------------
 // NEW: Enhanced WhatsApp Function with Email Status
 // ----------------------
-function openWhatsAppWithEmailStatus(name, txnId, imageUrl, emailDelivered, emailError) {
+function openWhatsAppWithEmailStatus(name, txnId, emailDelivered, emailError) {
   const orderDetails = cart.map(item => 
     `• ${item.quantity} x ${item.name} (${item.weight}) - ₹${item.price * item.quantity}`
   ).join('\n');
@@ -1384,13 +1390,7 @@ function openWhatsAppWithEmailStatus(name, txnId, imageUrl, emailDelivered, emai
     message += `   - Please send payment screenshot manually\n`;
   }
   
-  if (imageUrl && imageUrl !== "SCREENSHOT_UPLOAD_FAILED") {
-    message += `📸 Screenshot uploaded: ${imageUrl}\n\n`;
-  } else {
-    message += `📸 Screenshot upload failed - please send manually\n\n`;
-  }
-  
-  message += `Delivery Address: `;
+  message += `\nDelivery Address: `;
 
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   
@@ -1462,27 +1462,6 @@ function validatePaymentForm() {
   }
   
   return true;
-}
-
-// ----------------------
-// Image Upload Function (USES YOUR API KEY)
-// ----------------------
-async function uploadImageToImageBB(file) {
-  const formData = new FormData();
-  formData.append('image', file);
-  
-  const response = await fetch(`https://api.imgbb.com/1/upload?key=14c6da0e311178eb321eff414e2c8d14`, {
-    method: 'POST',
-    body: formData
-  });
-  
-  const result = await response.json();
-  
-  if (result.success) {
-    return result.data.url; // Return image URL
-  } else {
-    throw new Error('ImageBB upload failed: ' + result.error.message);
-  }
 }
 
 // ----------------------
