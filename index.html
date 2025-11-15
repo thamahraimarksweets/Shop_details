@@ -7,7 +7,7 @@
   <meta name="description" content="Thamahrai Mark Sweets - Authentic Tamil Mittai, Chikki & Traditional Sweets in Madurai since 1968. Fresh peanut chikki, sesame mittai, coconut sweets, kadalai mittai, ellu mittai. Order online with delivery across Tamil Nadu.">
  <meta name="keywords" content="
 Thamahrai Mark Sweets, Thamahrai Mark, Madurai chikki, Tamil chikki, buy chikki online, homemade chikki, jaggery chikki, premium chikki, fresh chikki, traditional Tamil sweets, traditional chikki, online Tamil sweets, Tamil Nadu chikki delivery, Madurai sweets, Madurai mittai kadai, chikki manufacturer Tamil Nadu, chikki seller Madurai, chikki shop Madurai,
-peanut chikki, kadalai mittai, groundnut chikki, peanut candy, peanut sweet, kadalai urundai, groundnut candy, healthy peanut chikki, protein peanut bar, kadalai chikki bar, kadalai mini bar, kadalai chikki jar, kadalai gift box, kadalai mittai online, best kadalai mittai, kadalai chikki price, jaggery peanut chikki, Tamil peanut sweet, crunchy peanut bar, నటి கடலை மிட்டாய், கடலை சிக்கி, மதுரை கடலை மிட்டாய், குழந்தைகளுக்கு கடலை சிக்கி,
+peanut chikki, kadalai mittai, groundnut chikki, peanut candy, peanut sweet, kadalai urundai, groundnut candy, healthy peanut chikki, protein peanut bar, kadalai mini bar, kadalai chikki jar, kadalai gift box, kadalai mittai online, best kadalai mittai, kadalai chikki price, jaggery peanut chikki, Tamil peanut sweet, crunchy peanut bar, నటి கடலை மிட்டாய், கடலை சிக்கி, மதுரை கடலை மிட்டாய், குழந்தைகளுக்கு கடலை சிக்கி,
 sesame chikki, ellu mittai, sesame mini bar, black sesame chikki, white sesame chikki, ellu urundai, ellu candy, ellu chikki bar, ellu chikki box, ellu online sweet, ellu mittai Tamil Nadu, ellu chikki wholesale, स्मार्ट ellu mittai, எள்ளு சிக்கி, கருப்பு எள்ளு சிக்கி, வெள்ளை எள்ளு சிக்கி, எள்ளு உருண்டை, மதுரை எள்ளு மிட்டாய்,
 coconut chikki, coco chikki, copra sweet, coconut candy, coconut chikki bar, coconut mini bar, manila chikki, manilla chikki box, coconut balls sweet, coconut jaggery sweet, healthy coconut snack, நாரிக்காய் சிக்கி, தேங்காய் மிட்டாய் மதுரை, மேனிலா சிக்கி,
 friedgram chikki, pottukadalai mittai, roasted gram sweet, protein snack chikki, fried gram bar, fried gram balls, பொட்டுக்கடலை சிக்கி, பொட்டுக்கடலை உருண்டை, protein mittai kids,
@@ -1237,24 +1237,21 @@ async function submitPaymentDetails() {
     const orderDetails = getOrderDetailsText();
     const totalAmount = getCartTotal();
     
-    const payload = {
-      name: name,
-      phone: "Not provided", // You can add a phone field if needed
-      transactionId: txnId,
-      amount: totalAmount,
-      order: orderDetails,
-      imageBase64: imageBase64
-    };
+    // Create FormData object as in test.html
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("phone", "Not provided");
+    formData.append("transactionId", txnId);
+    formData.append("amount", totalAmount);
+    formData.append("order", orderDetails);
+    formData.append("imageBase64", imageBase64);
 
     // Step 3: Submit to Google Apps Script with timeout
     updateProgress(80, 'Sending email confirmation...');
     
     const submissionPromise = fetch(GOOGLE_SCRIPT_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload)
+      method: "POST",
+      body: formData
     });
     
     // Set a timeout for the submission
