@@ -307,6 +307,38 @@ authentic taste Tamil, original recipe chikki, heritage sweet store Madurai, pre
     .price{font-weight:700;color:var(--accent); font-size: 18px;}
     .weight{font-size: 13px; color: var(--muted); margin: 6px 0; font-weight: 500;}
     
+    /* NEW: MRP Price Styles */
+    .price-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 8px 0;
+      flex-wrap: wrap;
+    }
+    
+    .mrp-price {
+      font-size: 14px;
+      color: #888;
+      text-decoration: line-through;
+      font-weight: 500;
+    }
+    
+    .discount-badge {
+      background: linear-gradient(135deg, #ff4444, #ff0000);
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-left: 4px;
+    }
+    
+    .actual-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    
     .btn{display:inline-block;padding:10px 16px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-weight:700;text-decoration:none;cursor:pointer;transition:all 0.3s ease; width: 100%; text-align: center;}
     .btn:hover{background:var(--accent-2);transform:translateY(-2px); box-shadow: 0 6px 20px rgba(200,90,30,0.3);}
     .btn-outline{background:#fff;color:var(--accent);border:2px solid rgba(200,90,30,0.3)}
@@ -403,6 +435,7 @@ authentic taste Tamil, original recipe chikki, heritage sweet store Madurai, pre
       .badge { justify-content: center; padding: 10px 16px; }
       .hero .btn { flex: 1; text-align: center; padding: 12px 16px; font-size: 15px; }
       .payment-options { flex-direction: column; }
+      .price-container { flex-direction: column; align-items: flex-start; gap: 4px; }
     }
 
     .fade-up{opacity:0;transform:translateY(10px);transition:all 420ms cubic-bezier(.2,.9,.3,1)}
@@ -947,83 +980,83 @@ const PRODUCTS = [
   // =============================================
   // MINI BARS CATEGORY (6 products)
   // =============================================
-  {id:1, category:'miniBars', name:'Peanut Chikki Mini Bar', price:10, weight:'~ 40g', 
+  {id:1, category:'miniBars', name:'Peanut Chikki Mini Bar', price:10, mrp:15, weight:'~ 40g', 
    img:'assets/images/mb1_kadala.jpg'},
   
-  {id:2, category:'miniBars', name:'Manila (CoCo) Chikki Mini Bar', price:10, weight:'~ 40g', 
+  {id:2, category:'miniBars', name:'Manila (CoCo) Chikki Mini Bar', price:10, mrp:15, weight:'~ 40g', 
    img:'assets/images/mb1_coco.jpg'},
   
-  {id:3, category:'miniBars', name:'Sesame Chikki Mini Bar', price:10, weight:'~ 35g', 
+  {id:3, category:'miniBars', name:'Sesame Chikki Mini Bar', price:10, mrp:15, weight:'~ 35g', 
    img:'assets/images/mb1_ellu.jpg'},
   
   // =============================================
   // BARS CATEGORY (8 products)
   // =============================================
-  {id:7, category:'bars', name:'Peanut Chikki Bar', price:79, weight:'~ 400g', 
+  {id:7, category:'bars', name:'Peanut Chikki Bar', price:79, mrp:100, weight:'~ 400g', 
    img:'assets/images/b3_kadala.jpg'},
   
-  {id:8, category:'bars', name:'Manila (CoCo) Chikki Bar', price:79, weight:'~ 350g', 
+  {id:8, category:'bars', name:'Manila (CoCo) Chikki Bar', price:79, mrp:100, weight:'~ 350g', 
    img:'assets/images/b3_coco.jpg'},
   
-  {id:9, category:'bars', name:'Peanut Chikki Bar', price:29, weight:'~ 115g', 
+  {id:9, category:'bars', name:'Peanut Chikki Bar', price:29, mrp:32, weight:'~ 115g', 
    img:'assets/images/b2_kadala.jpg'},
   
-  {id:10, category:'bars', name:'Manila (CoCo) Chikki Bar', price:29, weight:'~ 100g', 
+  {id:10, category:'bars', name:'Manila (CoCo) Chikki Bar', price:29, mrp:32, weight:'~ 100g', 
    img:'assets/images/b2_coco.jpg'},
   
-  {id:11, category:'bars', name:'Sesame Chikki Bar', price:29, weight:'~ 100g', 
+  {id:11, category:'bars', name:'Sesame Chikki Bar', price:29, mrp:32, weight:'~ 100g', 
    img:'assets/images/b2_ellu.jpg'},
   
-  {id:12, category:'bars', name:'Peanut Chikki Bar', price:20, weight:'~ 100g', 
+  {id:12, category:'bars', name:'Peanut Chikki Bar', price:20, mrp:24, weight:'~ 100g', 
    img:'assets/images/b1_kadala.jpg'},
   
-  {id:13, category:'bars', name:'Manila (CoCo) Chikki Bar', price:20, weight:'~ 90g', 
+  {id:13, category:'bars', name:'Manila (CoCo) Chikki Bar', price:20, mrp:24, weight:'~ 90g', 
    img:'assets/images/b1_coco.jpg'},
   
-  {id:14, category:'bars', name:'Sesame Chikki Bar', price:20, weight:'~ 90g', 
+  {id:14, category:'bars', name:'Sesame Chikki Bar', price:20, mrp:24, weight:'~ 90g', 
    img:'assets/images/b1_ellu.jpg'},
   
   // =============================================
   // JARS CATEGORY (5 products)
   // =============================================
-  {id:15, category:'jars', name:'Peanut Chikki Jar', price:129, weight:'30 pc x 18g', 
+  {id:15, category:'jars', name:'Peanut Chikki Jar', price:129, mrp:150, weight:'30 pc x 18g', 
    img:'assets/images/jar_kadala.jpg'},
   
-  {id:17, category:'jars', name:'Sesame Chikki Jar', price:129, weight:'30 pc x 18g', 
+  {id:17, category:'jars', name:'Sesame Chikki Jar', price:129, mrp:150, weight:'30 pc x 18g', 
    img:'assets/images/jar_ellu.jpg'},
   
-  {id:16, category:'jars', name:'Manila (CoCo) Chikki Jar', price:129, weight:'30 pc x 18g', 
+  {id:16, category:'jars', name:'Manila (CoCo) Chikki Jar', price:129, mrp:150, weight:'30 pc x 18g', 
    img:'assets/images/jar_coco.jpg'},
   
-  {id:18, category:'jars', name:'CoCo Cashew Chikki Jar', price:129, weight:'30 pc x 15g', 
+  {id:18, category:'jars', name:'CoCo Cashew Chikki Jar', price:129, mrp:150, weight:'30 pc x 15g', 
    img:'assets/images/jar_cococashew.jpg'},
   
 
   // =============================================
   // BOXES CATEGORY (8 products)
   // =============================================
-  {id:20, category:'boxes', name:'Peanut Chikki Variety Box', price:49, weight:'~ 150g', 
+  {id:20, category:'boxes', name:'Peanut Chikki Variety Box', price:49, mrp:60, weight:'~ 150g', 
    img:'assets/images/box_peanut.jpg'},
 
-  {id:21, category:'boxes', name:'Manilla (CoCo) Chikki Box', price:49, weight:'~ 150g', 
+  {id:21, category:'boxes', name:'Manilla (CoCo) Chikki Box', price:49, mrp:60, weight:'~ 150g', 
    img:'assets/images/box_manila.jpg'},
 
-  {id:22, category:'boxes', name:'Sesame Chikki Box', price:49, weight:'~ 120g', 
+  {id:22, category:'boxes', name:'Sesame Chikki Box', price:49, mrp:60, weight:'~ 120g', 
    img:'assets/images/box_black_seasame.jpg'},
   
-  {id:23, category:'boxes', name:'White Sesame Chikki Box', price:49, weight:'~ 140g', 
+  {id:23, category:'boxes', name:'White Sesame Chikki Box', price:49, mrp:60, weight:'~ 140g', 
    img:'assets/images/box_wh_seasame.jpg'},
   
-  {id:24, category:'boxes', name:'Palm Jaggery Chikki Box', price:49, weight:'~ 80g', 
+  {id:24, category:'boxes', name:'Palm Jaggery Chikki Box', price:49, mrp:60, weight:'~ 80g', 
    img:'assets/images/box_palmjaggery.jpg'},
   
-  {id:25, category:'boxes', name:'Nuts Chikki Box', price:119, weight:'~ 90g', 
+  {id:25, category:'boxes', name:'Nuts Chikki Box', price:119, mrp:150, weight:'~ 90g', 
    img:'assets/images/box_nuts.jpg'},
   
-  {id:26, category:'boxes', name:'Friedgram Chikki Box', price:49, weight:'~ 130g', 
+  {id:26, category:'boxes', name:'Friedgram Chikki Box', price:49, mrp:60, weight:'~ 130g', 
    img:'assets/images/box_friedgram.jpg'},
   
-  {id:27, category:'boxes', name:'Coconut Chikki Box', price:49, weight:'~ 130g', 
+  {id:27, category:'boxes', name:'Coconut Chikki Box', price:49, mrp:60, weight:'~ 130g', 
    img:'assets/images/box_coconut.jpg'},
   
 
@@ -1031,22 +1064,22 @@ const PRODUCTS = [
   // =============================================
   // PACKS & BALLS CATEGORY (6 products)
   // =============================================
-  {id:28, category:'packsBalls', name:'Peanut Chikki Pack', price:55, weight:'~ 200g', 
+  {id:28, category:'packsBalls', name:'Peanut Chikki Pack', price:55, mrp:70, weight:'~ 200g', 
    img:'assets/images/pack_kadala.jpg'},
   
-  {id:29, category:'packsBalls', name:'Manilla (coco) Chikki Pack', price:55, weight:'~ 200g', 
+  {id:29, category:'packsBalls', name:'Manilla (coco) Chikki Pack', price:55, mrp:70, weight:'~ 200g', 
    img:'assets/images/pack_coco.jpg'},
   
-  {id:30, category:'packsBalls', name:'Peanut Chikki Balls', price:29, weight:'~ 120g', 
+  {id:30, category:'packsBalls', name:'Peanut Chikki Balls', price:29, mrp:40, weight:'~ 120g', 
    img:'assets/images/balls_kadala.jpg'},
   
-  {id:31, category:'packsBalls', name:'Sesame Chikki Balls', price:33, weight:'~ 100g', 
+  {id:31, category:'packsBalls', name:'Sesame Chikki Balls', price:33, mrp:40, weight:'~ 100g', 
    img:'assets/images/balls_ellu.jpg'},
   
-  {id:32, category:'packsBalls', name:'Friedgram Chikki Balls', price:29, weight:'~ 120g', 
+  {id:32, category:'packsBalls', name:'Friedgram Chikki Balls', price:29, mrp:40, weight:'~ 120g', 
    img:'assets/images/balls_friedgram.jpg'},
   
-  {id:33, category:'packsBalls', name:'Jagnut Chikki Balls', price:49, weight:'8 balls', 
+  {id:33, category:'packsBalls', name:'Jagnut Chikki Balls', price:49, mrp:60, weight:'8 balls', 
    img:'assets/images/balls_jagnut.jpg'}
 ];
 
@@ -1074,6 +1107,15 @@ const WHATSAPP_NUMBER = "917598768899"; // Your WhatsApp number
 // Google Apps Script Configuration  
 // ----------------------
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRUTT6KqysIbOLoP-PlZiTXwGRJklPBc5BNVShjHo0GCINL17b-BH8ywoieO0VzBcK/exec"; // Replace with your actual script URL
+
+// ----------------------
+// NEW: Simplified WhatsApp Opening Function
+// ----------------------
+function openWhatsAppDirectly(message) {
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  // This will NEVER be blocked by popup blockers
+  window.location.href = url;
+}
 
 // ----------------------
 // Render Varieties
@@ -1389,16 +1431,7 @@ function openWhatsAppWithEmailStatus(name, txnId, emailDelivered, emailError) {
   
   message += `\nDelivery Address: `;
 
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  
-  // Popup-safe method
-  const link = document.createElement('a');
-  link.href = url;
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  openWhatsAppDirectly(message);
 }
 
 // ----------------------
@@ -1598,7 +1631,7 @@ renderVarieties();
 renderCartItems();
 
 // ----------------------
-// Product rendering
+// Product rendering with MRP prices
 // ----------------------
 function renderProducts() {
   renderCategory('miniBars', 'miniBarsGrid');
@@ -1619,15 +1652,26 @@ function renderCategory(category, containerId) {
     // Add jar-card class for jars category
     const isJar = category === 'jars';
     card.className = `card fade-up ${isJar ? 'jar-card' : ''}`;
+    
+    // Calculate discount percentage
+    const discountPercent = Math.round(((product.mrp - product.price) / product.mrp) * 100);
+    
     card.innerHTML = `
       <div class="product-media">
         <img src="${product.img}" alt="${product.name} - Traditional Tamil sweet from Thamahrai Mark Sweets Madurai" style="width:100%;height:100%;object-fit:cover">
       </div>
       <h4 style="margin:8px 0 4px;font-size:16px">${product.name}</h4>
       <div class='weight'>${product.weight}</div>
-      <div class='meta'>
-        <div class='price'>₹ ${product.price}</div>
+      
+      <!-- NEW: MRP Price Display -->
+      <div class="price-container">
+        <div>
+          <span class="mrp-price">MRP: ₹${product.mrp}</span>
+          <span class="actual-price">₹${product.price}</span>
+          <span class="discount-badge">${discountPercent}% OFF</span>
+        </div>
       </div>
+      
       <div class="quantity-controls">
         <button class="qty-btn" onclick="decreaseQuantity(${product.id})">-</button>
         <span class="qty-display" id="qty-${product.id}">${getProductQuantity(product.id)}</span>
@@ -1842,7 +1886,7 @@ function getOrderDetailsText() {
 }
 
 // ----------------------
-// WhatsApp ordering
+// WhatsApp ordering - UPDATED to use window.location.href
 // ----------------------
 function sendWhatsAppOrder() {
   if (cart.length === 0) {
@@ -1872,16 +1916,7 @@ function sendWhatsAppOrder() {
   message += `\n\nPayment Method: WhatsApp Order (Cash on Delivery/UPI at delivery)`;
   message += `\n\nMy Delivery Address: `;
   
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  
-  // Use popup-safe method
-  const link = document.createElement('a');
-  link.href = url;
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  openWhatsAppDirectly(message);
 }
 
 // ----------------------
@@ -1921,20 +1956,11 @@ document.addEventListener('DOMContentLoaded', function() {
   setupSlideshowHover();
 });
 
-// WhatsApp button functionality
+// WhatsApp button functionality - UPDATED to use window.location.href
 document.getElementById('waBtn').addEventListener('click', function(e) {
   e.preventDefault();
-  const msg = encodeURIComponent('Hi, I would like to place an order for traditional Tamil sweets from Thamahrai Mark Sweets.');
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
-  
-  // Use popup-safe method
-  const link = document.createElement('a');
-  link.href = url;
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  const message = 'Hi, I would like to place an order for traditional Tamil sweets from Thamahrai Mark Sweets.';
+  openWhatsAppDirectly(message);
 });
 
 // Add this function for minimum order validation
